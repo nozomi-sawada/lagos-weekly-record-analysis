@@ -1,4 +1,3 @@
-# lagos-weekly-record-analysis
 # Lagos Weekly Record 地理・キーワード分析アプリケーション
 
 
