@@ -1137,6 +1137,9 @@
         // Current language (default to English or browser language)
         let currentLanguage = 'en';
 
+        // Store current keyword analysis data for re-rendering on language switch
+        let currentKeywordData = null;
+
         // Function to switch language
         function switchLanguage(lang) {
             currentLanguage = lang;
@@ -1192,6 +1195,17 @@
                 } else {
                     toggleBtn.textContent = t.showQuotes;
                 }
+            }
+
+            // Re-render keyword results if they exist
+            if (currentKeywordData) {
+                updateKeywordResults(
+                    currentKeywordData.keyword,
+                    currentKeywordData.quotes,
+                    currentKeywordData.relatedTerms,
+                    currentKeywordData.themes,
+                    currentKeywordData.yearlyMentions
+                );
             }
         }
 
@@ -2539,6 +2553,9 @@
         
         // Update the keyword analysis results display
         function updateKeywordResults(keyword, quotes, relatedTerms, themes, yearlyMentions) {
+            // Store data for re-rendering on language switch
+            currentKeywordData = { keyword, quotes, relatedTerms, themes, yearlyMentions };
+
             const resultsContainer = document.getElementById('keyword-results');
             resultsContainer.innerHTML = '';
             
