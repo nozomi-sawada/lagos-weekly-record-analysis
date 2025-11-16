@@ -70,6 +70,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Chart labels respect language selection
   - Modal content translated
 
+### Fixed
+- **Keyword results not updating on language switch**
+  - Added global variable to store current keyword analysis data
+  - Language switcher now triggers re-rendering of keyword results
+  - All dynamic keyword section titles now properly translate when switching languages
+
+- **"(+ variations)" suffix translation**
+  - English: "(+ variations)"
+  - Japanese: "（複数形含む）"
+  - Displays when multiple keywords are entered (e.g., "Yoruba, Yorubas")
+  - Keeps the actual keyword in its original form
+
+- **UI clarity to prevent auto-detection misconception**
+  - Changed default input from "Yoruba, Yorubas" to "Yoruba" (single keyword)
+  - Updated placeholder text to show single keyword example
+  - Revised tip text to clarify that multiple variation search requires manual comma-separated input
+  - Prevents users from mistakenly thinking plural forms or derivatives are auto-detected
+  - Makes it clear that:
+    - No automatic plural detection (e.g., "Lagos" does not auto-search "Lagoss")
+    - No automatic derivative detection (e.g., "she" does not auto-search "her")
+    - No automatic related word detection (e.g., "Japan" does not auto-search "Japanese")
+    - Users must explicitly enter all variations they want to search
+
 ### Technical Details
 
 #### Performance Impact
@@ -101,6 +124,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Commits
 - `3c40890` - Add bilingual (English/Japanese) support to documentation and application
 - `6d99b19` - Fix language switcher: default to English and translate keyword results
+- `683e107` - Fix keyword results not updating on language switch
+- `f40ff80` - Translate '(+ variations)' suffix in keyword display
+- `798d38f` - Clarify keyword search UI to avoid misconception about auto-detection
+- `e15e60a` - Add CHANGELOG.md to document bilingual implementation
 
 ---
 
