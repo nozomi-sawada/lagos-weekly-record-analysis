@@ -1077,7 +1077,13 @@
                 bothFilesReady: "Both files loaded. Ready to start analysis!",
                 filteringYears: "Filtering:",
                 yearTo: "to",
-                allYears: "(all years)"
+                allYears: "(all years)",
+                mentionsOverTime: 'Mentions of "{keyword}" Over Time',
+                mainThemesAssociated: 'Main Themes Associated with "{keyword}"',
+                termsFrequentlyAppearing: 'Terms Frequently Appearing with "{keyword}"',
+                mostRelevantQuotes: 'Most Relevant Quotes about "{keyword}"',
+                clickToEnlarge: "Click on chart to view enlarged version",
+                totalMentions: "Total {total} mentions from {start} to {end} (Max: {max})"
             },
             ja: {
                 title: "ラゴス・ウィークリー・レコード キーワード分析 (1891-1921)",
@@ -1118,7 +1124,13 @@
                 bothFilesReady: "両方のファイルが読み込まれました。分析を開始する準備ができました！",
                 filteringYears: "フィルタリング中:",
                 yearTo: "から",
-                allYears: "(すべての年)"
+                allYears: "(すべての年)",
+                mentionsOverTime: '"{keyword}" の経時的言及数',
+                mainThemesAssociated: '"{keyword}" に関連する主要テーマ',
+                termsFrequentlyAppearing: '"{keyword}" と共起する語句',
+                mostRelevantQuotes: '"{keyword}" に関する関連引用',
+                clickToEnlarge: "グラフをクリックして拡大表示",
+                totalMentions: "合計{total}回の言及 ({start}年から{end}年、最大: {max}回)"
             }
         };
 
@@ -1190,11 +1202,8 @@
             if (stored && (stored === 'en' || stored === 'ja')) {
                 currentLanguage = stored;
             } else {
-                // Detect browser language
-                const browserLang = navigator.language || navigator.userLanguage;
-                if (browserLang.startsWith('ja')) {
-                    currentLanguage = 'ja';
-                }
+                // Default to English for academic/international use
+                currentLanguage = 'en';
             }
 
             switchLanguage(currentLanguage);
@@ -2536,11 +2545,12 @@
             // 1. Create timeline chart
             const timelineSection = document.createElement('div');
             timelineSection.className = 'keyword-section';
+            const t = translations[currentLanguage];
             timelineSection.innerHTML = `
-                <div class="keyword-section-title">Mentions of "${keyword}" Over Time</div>
+                <div class="keyword-section-title">${t.mentionsOverTime.replace('{keyword}', keyword)}</div>
                 <div class="timeline-chart" id="timeline-chart"></div>
                 <div style="text-align: center; font-size: 12px; color: #555; margin-top: 5px;">
-                    Click on chart to view enlarged version
+                    ${t.clickToEnlarge}
                 </div>
             `;
             resultsContainer.appendChild(timelineSection);
@@ -2552,7 +2562,7 @@
             const themesSection = document.createElement('div');
             themesSection.className = 'keyword-section';
             themesSection.innerHTML = `
-                <div class="keyword-section-title">Main Themes Associated with "${keyword}"</div>
+                <div class="keyword-section-title">${t.mainThemesAssociated.replace('{keyword}', keyword)}</div>
                 <div class="theme-container" id="theme-container"></div>
             `;
             resultsContainer.appendChild(themesSection);
@@ -2573,7 +2583,7 @@
             const termsSection = document.createElement('div');
             termsSection.className = 'keyword-section';
             termsSection.innerHTML = `
-                <div class="keyword-section-title">Terms Frequently Appearing with "${keyword}"</div>
+                <div class="keyword-section-title">${t.termsFrequentlyAppearing.replace('{keyword}', keyword)}</div>
                 <div class="related-terms" id="related-terms"></div>
             `;
             resultsContainer.appendChild(termsSection);
@@ -2594,7 +2604,7 @@
             const quotesSection = document.createElement('div');
             quotesSection.className = 'keyword-section';
             quotesSection.innerHTML = `
-                <div class="keyword-section-title">Most Relevant Quotes about "${keyword}"</div>
+                <div class="keyword-section-title">${t.mostRelevantQuotes.replace('{keyword}', keyword)}</div>
                 <div id="keyword-quotes-container"></div>
             `;
             resultsContainer.appendChild(quotesSection);
@@ -2697,23 +2707,28 @@
             try {
                 // Get the current keyword for the title
                 const keyword = document.getElementById('keyword-input').value.trim();
-                
+                const t = translations[currentLanguage];
+
                 // Set modal title
-                document.getElementById('modal-chart-title').textContent = `Mentions of "${keyword}" Over Time`;
-                
+                document.getElementById('modal-chart-title').textContent = t.mentionsOverTime.replace('{keyword}', keyword);
+
                 // Calculate total counts and find max value
                 let totalCount = 0;
                 let maxCount = 0;
-                yearData.forEach(item => { 
+                yearData.forEach(item => {
                     const count = item.count || 0;
                     totalCount += count;
                     maxCount = Math.max(maxCount, count);
                 });
-                
+
                 const startYear = yearData[0].year;
                 const endYear = yearData[yearData.length-1].year;
-                document.getElementById('modal-chart-subtitle').textContent = 
-                    `Total ${totalCount} mentions from ${startYear} to ${endYear} (Max: ${maxCount})`;
+                document.getElementById('modal-chart-subtitle').textContent =
+                    t.totalMentions
+                        .replace('{total}', totalCount)
+                        .replace('{start}', startYear)
+                        .replace('{end}', endYear)
+                        .replace('{max}', maxCount);
                 
                 // Clear previous chart
                 const container = document.getElementById('enlarged-chart');
