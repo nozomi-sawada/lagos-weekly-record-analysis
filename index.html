@@ -366,6 +366,44 @@
             font-size: 12px;
             color: #777;
         }
+
+        /* Language Switcher Styles */
+        .language-switcher {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            display: flex;
+            gap: 5px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .lang-btn {
+            padding: 6px 12px;
+            background-color: white;
+            color: #555;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .lang-btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        .lang-btn.active {
+            background-color: #3388ff;
+            color: white;
+        }
+
+        .header {
+            position: relative;
+        }
         
         strong {
             background-color: #ffffbb;
@@ -842,8 +880,12 @@
 </head>
 <body>
     <div class="header">
-        <h1>Lagos Weekly Record Keyword Analysis (1891-1921)</h1>
-        <p class="description">
+        <div class="language-switcher">
+            <button class="lang-btn active" data-lang="en" onclick="switchLanguage('en')">English</button>
+            <button class="lang-btn" data-lang="ja" onclick="switchLanguage('ja')">日本語</button>
+        </div>
+        <h1 data-i18n="title">Lagos Weekly Record Keyword Analysis (1891-1921)</h1>
+        <p class="description" data-i18n="description">
             Advanced analysis of keywords and themes in Lagos Weekly Record editorials, with focus on geographic mentions and contextual relationships.
             Upload your CSV file to begin analysis.
         </p>
@@ -852,31 +894,31 @@
     <!-- ここが変更された部分: ファイルアップロードコンテナ -->
     <div id="file-upload-container" class="file-upload">
         <div class="file-upload-icon">📁</div>
-        <div class="file-upload-text">
+        <div class="file-upload-text" data-i18n="uploadText">
             Upload your CSV files to analyze Lagos Weekly Record data
         </div>
-        
+
         <div style="display: flex; gap: 10px; margin-bottom: 15px;">
             <div style="text-align: center;">
-                <button class="file-upload-button" onclick="document.getElementById('csv-file').click()">
+                <button class="file-upload-button" onclick="document.getElementById('csv-file').click()" data-i18n="selectAnalysisCSV">
                     Select Analysis CSV
                 </button>
                 <input type="file" id="csv-file" class="file-input" accept=".csv" onchange="handleFileUpload(this.files)" />
                 <div id="file-name" class="file-name"></div>
             </div>
-            
+
             <div style="text-align: center;">
-                <button class="file-upload-button" onclick="document.getElementById('location-csv-file').click()">
+                <button class="file-upload-button" onclick="document.getElementById('location-csv-file').click()" data-i18n="uploadLocationData">
                     Upload Location Data
                 </button>
                 <input type="file" id="location-csv-file" class="file-input" accept=".csv" onchange="handleLocationFileUpload(this.files)" />
                 <div id="location-file-name" class="file-name"></div>
             </div>
         </div>
-        
+
         <div id="upload-status" style="font-size: 14px; color: #666; margin-top: 15px;"></div>
         <div id="start-analysis-container" style="margin-top: 20px; display: none;">
-            <button class="file-upload-button" onclick="startAnalysis()">
+            <button class="file-upload-button" onclick="startAnalysis()" data-i18n="startAnalysis">
                 Start Analysis
             </button>
         </div>
@@ -888,27 +930,27 @@
             
             <div class="sidebar">
                 <div class="nav-tabs">
-                    <div class="nav-tab active" onclick="switchTab('geo-tab')">Geographic</div>
-                    <div class="nav-tab" onclick="switchTab('keyword-tab')">Keyword Analysis</div>
+                    <div class="nav-tab active" onclick="switchTab('geo-tab')" data-i18n="tabGeographic">Geographic</div>
+                    <div class="nav-tab" onclick="switchTab('keyword-tab')" data-i18n="tabKeywordAnalysis">Keyword Analysis</div>
                 </div>
                 
                 <!-- Geographic Tab Content -->
                 <div id="geo-tab" class="tab-content active">
                     <div class="filter-container">
-                        <div class="filter-label">Filter by Time Period:</div>
+                        <div class="filter-label" data-i18n="filterByTimePeriod">Filter by Time Period:</div>
                         <div class="periods-container" id="periods-container">
                             <!-- Will be populated with period buttons -->
                         </div>
-                        <button class="reset-filter" onclick="resetFilters()">Show All Years</button>
+                        <button class="reset-filter" onclick="resetFilters()" data-i18n="showAllYears">Show All Years</button>
                         <div class="filter-info" id="filter-info"></div>
                     </div>
                     <div class="location-list-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span id="location-header-text">Top Geographic Mentions</span>
+                            <span id="location-header-text" data-i18n="topGeographicMentions">Top Geographic Mentions</span>
                             <div class="display-controls">
                                 <select id="display-mode" onchange="changeDisplayMode()">
-                                    <option value="top">Top N Locations</option>
-                                    <option value="threshold">Frequency Threshold</option>
+                                    <option value="top" data-i18n="topNLocations">Top N Locations</option>
+                                    <option value="threshold" data-i18n="frequencyThreshold">Frequency Threshold</option>
                                 </select>
                                 <input type="number" id="display-value" min="5" max="100" value="30" style="width: 60px;" onchange="updateDisplaySetting()">
                             </div>
@@ -919,13 +961,13 @@
                         <div class="details-header">
                             <div class="details-title" id="details-title"></div>
                             <div class="details-counts">
-                                <div class="details-count">Mentions: <span id="details-mentions"></span></div>
-                                <div class="details-count">Articles: <span id="details-articles"></span></div>
+                                <div class="details-count"><span data-i18n="mentions">Mentions</span>: <span id="details-mentions"></span></div>
+                                <div class="details-count"><span data-i18n="articles">Articles</span>: <span id="details-articles"></span></div>
                             </div>
-                            <button id="toggle-quotes-btn" class="toggle-quotes-btn" onclick="toggleQuotes()">Show Quotes</button>
+                            <button id="toggle-quotes-btn" class="toggle-quotes-btn" onclick="toggleQuotes()" data-i18n="showQuotes">Show Quotes</button>
                         </div>
                         <div class="quote-section" id="quote-section" style="display: none;">
-                            <div class="quote-header">Sample Quotes</div>
+                            <div class="quote-header" data-i18n="sampleQuotes">Sample Quotes</div>
                             <div id="quotes-container"></div>
                         </div>
                     </div>
@@ -935,14 +977,14 @@
                 <div id="keyword-tab" class="tab-content">
                     <div class="keyword-analysis-container">
                         <div class="keyword-search">
-                            <input type="text" id="keyword-input" class="keyword-input" placeholder="Enter keywords (e.g., Yoruba, Yorubas)" value="Yoruba, Yorubas">
-                            <button class="keyword-search-btn" onclick="analyzeKeyword()">Analyze</button>
+                            <input type="text" id="keyword-input" class="keyword-input" data-i18n-placeholder="keywordPlaceholder" placeholder="Enter keywords (e.g., Yoruba, Yorubas)" value="Yoruba, Yorubas">
+                            <button class="keyword-search-btn" onclick="analyzeKeyword()" data-i18n="analyze">Analyze</button>
                         </div>
-                        <div class="keyword-search-tip">Separate multiple terms with commas to include variations (e.g., "Yoruba, Yorubas")</div>
-                        
+                        <div class="keyword-search-tip" data-i18n="keywordTip">Separate multiple terms with commas to include variations (e.g., "Yoruba, Yorubas")</div>
+
                         <div class="keyword-results" id="keyword-results">
                             <!-- Initially empty, will be populated by JavaScript -->
-                            <div style="text-align: center; color: #777; margin-top: 50px;">
+                            <div style="text-align: center; color: #777; margin-top: 50px;" data-i18n="keywordInstructions">
                                 Enter a keyword and click "Analyze" to see contextual patterns and related themes.
                                 <br><br>
                                 Try "Yoruba" to see detailed analysis of its usage in Lagos Weekly Record.
@@ -954,28 +996,28 @@
         </div>
         
         <div class="legend">
-            <div class="legend-title">Mention Frequency</div>
+            <div class="legend-title" data-i18n="mentionFrequency">Mention Frequency</div>
             <div class="legend-item">
                 <div class="legend-color" style="background-color: #08306b;"></div>
-                <span>300+ mentions</span>
+                <span data-i18n="legendHigh">300+ mentions</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background-color: #2171b5;"></div>
-                <span>150-300 mentions</span>
+                <span data-i18n="legendMediumHigh">150-300 mentions</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background-color: #4292c6;"></div>
-                <span>50-150 mentions</span>
+                <span data-i18n="legendMedium">50-150 mentions</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background-color: #9ecae1;"></div>
-                <span>&lt;50 mentions</span>
+                <span data-i18n="legendLow">&lt;50 mentions</span>
             </div>
         </div>
-        
+
         <div class="loading" id="loading" style="display: none;">
             <div class="spinner"></div>
-            <div>Processing Data...</div>
+            <div data-i18n="processingData">Processing Data...</div>
         </div>
     </div>
     
@@ -994,6 +1036,177 @@
     </div>
 
     <script>
+        // Language translations
+        const translations = {
+            en: {
+                title: "Lagos Weekly Record Keyword Analysis (1891-1921)",
+                description: "Advanced analysis of keywords and themes in Lagos Weekly Record editorials, with focus on geographic mentions and contextual relationships. Upload your CSV file to begin analysis.",
+                uploadText: "Upload your CSV files to analyze Lagos Weekly Record data",
+                selectAnalysisCSV: "Select Analysis CSV",
+                uploadLocationData: "Upload Location Data",
+                startAnalysis: "Start Analysis",
+                tabGeographic: "Geographic",
+                tabKeywordAnalysis: "Keyword Analysis",
+                filterByTimePeriod: "Filter by Time Period:",
+                showAllYears: "Show All Years",
+                topGeographicMentions: "Top Geographic Mentions",
+                topNLocations: "Top N Locations",
+                frequencyThreshold: "Frequency Threshold",
+                mentions: "Mentions",
+                articles: "Articles",
+                showQuotes: "Show Quotes",
+                hideQuotes: "Hide Quotes",
+                sampleQuotes: "Sample Quotes",
+                keywordPlaceholder: "Enter keywords (e.g., Yoruba, Yorubas)",
+                analyze: "Analyze",
+                keywordTip: 'Separate multiple terms with commas to include variations (e.g., "Yoruba, Yorubas")',
+                keywordInstructions: 'Enter a keyword and click "Analyze" to see contextual patterns and related themes.<br><br>Try "Yoruba" to see detailed analysis of its usage in Lagos Weekly Record.',
+                mentionFrequency: "Mention Frequency",
+                legendHigh: "300+ mentions",
+                legendMediumHigh: "150-300 mentions",
+                legendMedium: "50-150 mentions",
+                legendLow: "<50 mentions",
+                processingData: "Processing Data...",
+                errorReadingLocation: "Error reading location file!",
+                errorLocationColumns: "Error: Location CSV must contain 'placename', 'latitude', and 'longitude' columns.",
+                failedParseLocation: "Failed to parse location CSV:",
+                errorReadingAnalysis: "Error reading analysis file",
+                failedParseCSV: "Failed to parse CSV:",
+                analysisFileLoaded: "Analysis file loaded successfully!",
+                locationFileLoaded: "Location file loaded successfully!",
+                bothFilesReady: "Both files loaded. Ready to start analysis!",
+                filteringYears: "Filtering:",
+                yearTo: "to",
+                allYears: "(all years)"
+            },
+            ja: {
+                title: "ラゴス・ウィークリー・レコード キーワード分析 (1891-1921)",
+                description: "ラゴス・ウィークリー・レコード社説のキーワードとテーマの高度な分析。地理的言及と文脈的関係に焦点を当てています。CSVファイルをアップロードして分析を開始してください。",
+                uploadText: "ラゴス・ウィークリー・レコードのデータを分析するためにCSVファイルをアップロードしてください",
+                selectAnalysisCSV: "分析用CSVを選択",
+                uploadLocationData: "位置データをアップロード",
+                startAnalysis: "分析を開始",
+                tabGeographic: "地理的分析",
+                tabKeywordAnalysis: "キーワード分析",
+                filterByTimePeriod: "期間でフィルタリング:",
+                showAllYears: "すべての年を表示",
+                topGeographicMentions: "地理的言及トップ",
+                topNLocations: "上位N件の地域",
+                frequencyThreshold: "頻度の閾値",
+                mentions: "言及数",
+                articles: "記事数",
+                showQuotes: "引用を表示",
+                hideQuotes: "引用を非表示",
+                sampleQuotes: "サンプル引用",
+                keywordPlaceholder: "キーワードを入力 (例: Yoruba, Yorubas)",
+                analyze: "分析",
+                keywordTip: "複数の用語をカンマで区切って入力すると、バリエーションを含めることができます (例: \"Yoruba, Yorubas\")",
+                keywordInstructions: "キーワードを入力して「分析」をクリックすると、文脈パターンと関連テーマが表示されます。<br><br>「Yoruba」を試して、ラゴス・ウィークリー・レコードでの使用状況の詳細な分析をご覧ください。",
+                mentionFrequency: "言及頻度",
+                legendHigh: "300回以上",
+                legendMediumHigh: "150-300回",
+                legendMedium: "50-150回",
+                legendLow: "50回未満",
+                processingData: "データ処理中...",
+                errorReadingLocation: "位置情報ファイルの読み込みエラー！",
+                errorLocationColumns: "エラー: 位置情報CSVには 'placename'、'latitude'、'longitude' 列が必要です。",
+                failedParseLocation: "位置情報CSVの解析に失敗しました:",
+                errorReadingAnalysis: "分析ファイルの読み込みエラー",
+                failedParseCSV: "CSVの解析に失敗しました:",
+                analysisFileLoaded: "分析ファイルが正常に読み込まれました！",
+                locationFileLoaded: "位置情報ファイルが正常に読み込まれました！",
+                bothFilesReady: "両方のファイルが読み込まれました。分析を開始する準備ができました！",
+                filteringYears: "フィルタリング中:",
+                yearTo: "から",
+                allYears: "(すべての年)"
+            }
+        };
+
+        // Current language (default to English or browser language)
+        let currentLanguage = 'en';
+
+        // Function to switch language
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('preferredLanguage', lang);
+
+            // Update language buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+            });
+
+            // Update all translatable elements
+            updateTranslations();
+        }
+
+        // Function to update all translations
+        function updateTranslations() {
+            const t = translations[currentLanguage];
+
+            // Update elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (t[key]) {
+                    element.innerHTML = t[key];
+                }
+            });
+
+            // Update placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (t[key]) {
+                    element.placeholder = t[key];
+                }
+            });
+
+            // Update select options
+            const displayMode = document.getElementById('display-mode');
+            if (displayMode) {
+                displayMode.options[0].text = t.topNLocations;
+                displayMode.options[1].text = t.frequencyThreshold;
+            }
+
+            // Update dynamic content if it exists
+            if (typeof updateFilterInfo === 'function') {
+                updateFilterInfo();
+            }
+
+            // Update quote button if quotes section is visible
+            const quoteSection = document.getElementById('quote-section');
+            const toggleBtn = document.getElementById('toggle-quotes-btn');
+            if (quoteSection && toggleBtn) {
+                if (quoteSection.style.display === 'block') {
+                    toggleBtn.textContent = t.hideQuotes;
+                } else {
+                    toggleBtn.textContent = t.showQuotes;
+                }
+            }
+        }
+
+        // Initialize language on page load
+        function initializeLanguage() {
+            // Check for stored preference
+            const stored = localStorage.getItem('preferredLanguage');
+            if (stored && (stored === 'en' || stored === 'ja')) {
+                currentLanguage = stored;
+            } else {
+                // Detect browser language
+                const browserLang = navigator.language || navigator.userLanguage;
+                if (browserLang.startsWith('ja')) {
+                    currentLanguage = 'ja';
+                }
+            }
+
+            switchLanguage(currentLanguage);
+        }
+
+        // Call initialization when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeLanguage);
+        } else {
+            initializeLanguage();
+        }
+
         // Here we changed from 'const' to 'let'
         // Known locations with coordinates
         let locationCoordinates = {
@@ -1106,7 +1319,7 @@
                 processLocationCSV(csvData);
             };
             reader.onerror = function() {
-                document.getElementById('upload-status').textContent = "Error reading location file!";
+                document.getElementById('upload-status').textContent = translations[currentLanguage].errorReadingLocation;
             };
             reader.readAsText(file);
         }
@@ -1125,8 +1338,8 @@
                     // Check if the CSV has the required columns
                     const fields = results.meta.fields.map(field => field.toLowerCase());
                     if (!fields.includes('placename') || !fields.includes('latitude') || !fields.includes('longitude')) {
-                        document.getElementById('upload-status').textContent = 
-                            "Error: Location CSV must contain 'placename', 'latitude', and 'longitude' columns.";
+                        document.getElementById('upload-status').textContent =
+                            translations[currentLanguage].errorLocationColumns;
                         return;
                     }
                     
@@ -1135,14 +1348,14 @@
                     
                     // Update status
                     const locationCount = Object.keys(customLocationData).length;
-                    document.getElementById('upload-status').textContent = 
-                        `Successfully loaded ${locationCount} locations. ${analysisFileUploaded ? "" : "Please upload analysis data."}`;
-                    
+                    document.getElementById('upload-status').textContent =
+                        translations[currentLanguage].locationFileLoaded + (analysisFileUploaded ? ` ${translations[currentLanguage].bothFilesReady}` : "");
+
                     locationFileUploaded = true;
                     updateStartButtonVisibility();
                 },
                 error: function(error) {
-                    document.getElementById('upload-status').textContent = `Failed to parse location CSV: ${error.message}`;
+                    document.getElementById('upload-status').textContent = `${translations[currentLanguage].failedParseLocation} ${error.message}`;
                 }
             });
         }
@@ -1185,11 +1398,11 @@
             // Just store the file reference, don't process yet
             window.analysisFile = file;
             analysisFileUploaded = true;
-            
+
             // Update status
-            document.getElementById('upload-status').textContent = 
-                `Analysis file loaded. ${locationFileUploaded ? "" : "Please upload location data."}`;
-            
+            document.getElementById('upload-status').textContent =
+                translations[currentLanguage].analysisFileLoaded + (locationFileUploaded ? ` ${translations[currentLanguage].bothFilesReady}` : "");
+
             updateStartButtonVisibility();
         }
         
@@ -1225,7 +1438,7 @@
                 processCSVData(csvData);
             };
             reader.onerror = function() {
-                showError("Error reading analysis file");
+                showError(translations[currentLanguage].errorReadingAnalysis);
             };
             reader.readAsText(window.analysisFile);
         }
@@ -1301,7 +1514,7 @@
                     analyzeKeyword();
                 },
                 error: function(error) {
-                    showError("Failed to parse CSV: " + error.message);
+                    showError(translations[currentLanguage].failedParseCSV + " " + error.message);
                 }
             });
         }
@@ -1389,9 +1602,9 @@
         function updateFilterInfo() {
             const filterInfo = document.getElementById('filter-info');
             if (selectedPeriod) {
-                filterInfo.textContent = `Showing data from ${selectedPeriod.start} to ${selectedPeriod.end}`;
+                filterInfo.textContent = `${translations[currentLanguage].filteringYears} ${selectedPeriod.start} ${translations[currentLanguage].yearTo} ${selectedPeriod.end}`;
             } else {
-                filterInfo.textContent = 'Showing data from all years (1891-1921)';
+                filterInfo.textContent = `${translations[currentLanguage].filteringYears} ${translations[currentLanguage].allYears}`;
             }
         }
         
@@ -1780,13 +1993,13 @@
         function toggleQuotes() {
             const quoteSection = document.getElementById('quote-section');
             const toggleBtn = document.getElementById('toggle-quotes-btn');
-            
+
             if (quoteSection.style.display === 'none') {
                 quoteSection.style.display = 'block';
-                toggleBtn.textContent = 'Hide Quotes';
+                toggleBtn.textContent = translations[currentLanguage].hideQuotes;
             } else {
                 quoteSection.style.display = 'none';
-                toggleBtn.textContent = 'Show Quotes';
+                toggleBtn.textContent = translations[currentLanguage].showQuotes;
             }
         }
 
