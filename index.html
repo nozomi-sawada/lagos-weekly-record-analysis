@@ -1083,7 +1083,8 @@
                 termsFrequentlyAppearing: 'Terms Frequently Appearing with "{keyword}"',
                 mostRelevantQuotes: 'Most Relevant Quotes about "{keyword}"',
                 clickToEnlarge: "Click on chart to view enlarged version",
-                totalMentions: "Total {total} mentions from {start} to {end} (Max: {max})"
+                totalMentions: "Total {total} mentions from {start} to {end} (Max: {max})",
+                withVariations: "(+ variations)"
             },
             ja: {
                 title: "ラゴス・ウィークリー・レコード キーワード分析 (1891-1921)",
@@ -1130,7 +1131,8 @@
                 termsFrequentlyAppearing: '"{keyword}" と共起する語句',
                 mostRelevantQuotes: '"{keyword}" に関する関連引用',
                 clickToEnlarge: "グラフをクリックして拡大表示",
-                totalMentions: "合計{total}回の言及 ({start}年から{end}年、最大: {max}回)"
+                totalMentions: "合計{total}回の言及 ({start}年から{end}年、最大: {max}回)",
+                withVariations: "（複数形含む）"
             }
         };
 
@@ -2293,8 +2295,9 @@
                 const yearlyMentions = getYearlyMentionsForMultipleKeywords(keywords);
                 
                 // Update results display (using first keyword for display titles)
-                const displayKeyword = keywords.length > 1 ? 
-                                      `${keywords[0]} (+ variations)` : 
+                const t = translations[currentLanguage];
+                const displayKeyword = keywords.length > 1 ?
+                                      `${keywords[0]} ${t.withVariations}` :
                                       keywords[0];
                 
                 updateKeywordResults(displayKeyword, bestQuotes, relatedTerms, themes, yearlyMentions);
