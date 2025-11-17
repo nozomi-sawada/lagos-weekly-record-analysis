@@ -505,23 +505,19 @@
             { label: "1916-1921", start: 1916, end: 1921 }
         ];
 
-        // Tab switching functionality
+        // Tab switching functionality — data-tab based (no inline dependency)
         function switchTab(tabId) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
 
-            // Deactivate all tabs
-            document.querySelectorAll('.nav-tab').forEach(tab => {
-                tab.classList.remove('active');
+            // Toggle active state on tab buttons using data-tab
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === tabId);
             });
 
             // Show selected tab
-            document.getElementById(tabId).classList.add('active');
-
-            // Activate the tab button
-            document.querySelector(`.nav-tab[onclick="switchTab('${tabId}')"]`).classList.add('active');
+            const target = document.getElementById(tabId);
+            if (target) target.classList.add('active');
         }
 
         // Process CSV data
@@ -604,9 +600,9 @@
                 const button = document.createElement('button');
                 button.className = 'period-button';
                 button.textContent = period.label;
-                button.onclick = function() {
+                button.addEventListener('click', function() {
                     applyPeriodFilter(period);
-                };
+                });
                 periodsContainer.appendChild(button);
             });
         }
@@ -1112,9 +1108,9 @@
                             - Paragraph position
                         `;
 
-                        // XSS-safe: Use createElement + textContent for quote data
+                        // quote.quote already contains safe HTML from highlightTermsSafe (in extractQuoteWithSentenceBoundaries)
                         const blockquote = document.createElement('blockquote');
-                        blockquote.textContent = String(quote.quote ?? "");
+                        blockquote.innerHTML = String(quote.quote ?? "");
                         quoteElement.appendChild(blockquote);
 
                         const quoteSource = document.createElement('div');
@@ -1722,9 +1718,13 @@
                         - Paragraph position
                     `;
 
-                    // XSS-safe: Use createElement + textContent for quote data
+                    // Highlighted, but still safe: only highlightTermsSafe supplies HTML (<strong>); user data is escaped inside it.
                     const blockquote = document.createElement('blockquote');
-                    blockquote.textContent = String(quote.quote ?? "");
+                    const terms = String(document.getElementById('keyword-input').value || "")
+                        .split(',')
+                        .map(s => s.trim())
+                        .filter(Boolean);
+                    blockquote.innerHTML = highlightTermsSafe(String(quote.quote ?? ""), terms);
                     quoteElement.appendChild(blockquote);
 
                     const quoteSource = document.createElement('div');
@@ -1793,9 +1793,9 @@
             // Make the chart clickable to show enlarged view
             container.style.cursor = 'pointer';
             container.setAttribute('title', 'Click to enlarge');
-            container.onclick = () => {
+            container.addEventListener('click', () => {
                 showEnlargedChart(yearData);
-            };
+            });
         }
 
         // Show enlarged chart in modal - 強化修正版
@@ -1932,12 +1932,12 @@
         }
 
         // Modal outside click handler - 修正版
-        window.onclick = function(event) {
+        window.addEventListener('click', function(event) {
             const modal = document.getElementById('chart-modal');
             if (event.target === modal) {
                 modal.style.display = 'none';
             }
-        }
+        });
 
         // Initialize the file upload functionality
         document.addEventListener('DOMContentLoaded', () => {
@@ -2003,13 +2003,18 @@ document.addEventListener('DOMContentLoaded', function() {
         startBtn.addEventListener('click', startAnalysis);
     }
 
-    // Tab navigation
+    // Tab navigation — use explicit data-tab attribute (decoupled from i18n)
     document.querySelectorAll('.nav-tab').forEach(tab => {
-        tab.addEventListener('click', function() {
-            const tabId = this.getAttribute('data-i18n') === 'tabGeographic' ? 'geo-tab' : 'keyword-tab';
-            switchTab(tabId);
-        });
+        const targetId = tab.dataset.tab; // e.g., "geo-tab" / "keyword-tab"
+        if (targetId) {
+            tab.addEventListener('click', () => switchTab(targetId));
+        }
     });
+    // Initialize to the active tab if present
+    const active = document.querySelector('.nav-tab.active');
+    if (active && active.dataset.tab) {
+        switchTab(active.dataset.tab);
+    }
 
     // Reset filter button
     const resetBtn = document.querySelector('.reset-filter');
