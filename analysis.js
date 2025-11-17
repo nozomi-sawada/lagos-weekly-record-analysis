@@ -711,11 +711,23 @@
         }
 
         // Process the raw text to find and count locations
+        // [FIXED] Performance improvement: use pre-compiled regex patterns
         function processText(textData) {
             const locationMentions = {};
             const locationArticles = {};
             const locationQuotes = {};
             const locationYears = {}; // Track mentions by year
+
+            // [FIXED] Ensure compiled patterns exist (fallback re-compilation)
+            if (!escapedLocationPatterns || Object.keys(escapedLocationPatterns).length === 0) {
+                console.error("Location patterns not compiled! Re-compiling...");
+                escapedLocationPatterns = {};
+                if (locationKeywords && Array.isArray(locationKeywords)) {
+                    locationKeywords.forEach(k => {
+                        escapedLocationPatterns[k] = new RegExp('\\b' + escapeRegExp(k) + '\\b', 'gi');
+                    });
+                }
+            }
 
             textData.forEach(article => {
                 const text = article.text || "";
@@ -731,10 +743,19 @@
 
                 // Search for each location in the text
                 for (const location of locationKeywords) {
-                    // Case insensitive regex search with word boundaries
-                    const regex = new RegExp(`\\b${escapeRegExp(location)}\\b`, 'gi');
+                    // [FIXED] Use pre-compiled regex pattern (major performance improvement)
+                    const regex = escapedLocationPatterns[location];
+
+                    // Skip if pattern not found
+                    if (!regex) {
+                        continue;
+                    }
+
                     let matches = [];
                     let match;
+
+                    // [CRITICAL] Reset lastIndex for global regex reuse
+                    regex.lastIndex = 0;
 
                     // Find all matches and collect their positions
                     while ((match = regex.exec(text)) !== null) {
