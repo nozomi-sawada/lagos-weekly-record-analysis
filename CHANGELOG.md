@@ -178,9 +178,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### UI/UX Improvements
 - **Fixed chart alignment in enlarged modal**
-  - Added `justifyContent: 'center'` to chart container
-  - Charts now display centered when data points are few
+  - Corrected justifyContent application to parent element (.enlarged-chart)
+  - Charts now properly display centered when data points are few
   - Improves visual appearance for small datasets
+
+- **Fixed language default behavior**
+  - Added language settings version control to force English default
+  - Prevents localStorage from overriding English default on updates
+  - User language preferences are preserved within same settings version
 
 - **Fixed CSV loading freeze issue**
   - Modified CSP to allow Web Workers (worker-src 'self' blob:; child-src 'self' blob:)
@@ -202,6 +207,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `7285212` - Add comprehensive debug logging for CSV loading
 - `18e68f2` - Fix CSV loading freeze by disabling Papa.parse Web Workers (temporary fix)
 - `c3371a3` - Enable Papa.parse Web Workers with CSP modification for large datasets
+- `b50a309` - Update CHANGELOG.md with latest commit hash
+- `23bba2b` - Fix enlarged chart alignment by adding display: flex (partial fix)
+- `11d03ff` - Fix chart alignment and language default issues (complete fix)
 
 ---
 
