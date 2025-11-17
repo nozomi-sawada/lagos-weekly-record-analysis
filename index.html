@@ -4,15 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lagos Weekly Record Keyword Analysis (1891-1921)</title>
-    
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data: https://*.tile.openstreetmap.org; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; connect-src 'self' https://*.tile.openstreetmap.org;">
+
     <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
+      integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw=="
+      crossorigin="anonymous" />
     
     <!-- PapaParse for CSV parsing -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"
+      integrity="sha512-dfX5uYVXzyU8+KHqj8bjo7UkOdg18PaOtpa48djpNbZHwExddghZ+ZmzWT06R5v6NSk3ZUfsH6FNEDepLx9hPQ=="
+      crossorigin="anonymous"></script>
     
     <!-- Leaflet JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
+      integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g=="
+      crossorigin="anonymous"></script>
     
     <style>
         body {
@@ -1036,6 +1047,24 @@
     </div>
 
     <script>
+        // Security utility functions
+        function escapeHTML(s) {
+            return String(s).replace(/[&<>"']/g, ch =>
+                ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+        }
+
+        function escapeRegExp(s) {
+            return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        function highlightTermsSafe(rawText, terms) {
+            const escaped = escapeHTML(rawText);
+            if (!terms || terms.length === 0) return escaped;
+            const termsArray = Array.isArray(terms) ? terms : [terms];
+            const pattern = termsArray.map(t => `\\b${escapeRegExp(t)}\\b`).join('|');
+            return escaped.replace(new RegExp(pattern, 'gi'), m => `<strong>${escapeHTML(m)}</strong>`);
+        }
+
         // Language translations
         const translations = {
             en: {
@@ -1287,6 +1316,14 @@
         // List of words to search for in the text
         let locationKeywords = Object.keys(locationCoordinates);
 
+        // Pre-compile location patterns for performance
+        let escapedLocationPatterns = {};
+        if (locationKeywords && Array.isArray(locationKeywords)) {
+            locationKeywords.forEach(k => {
+                escapedLocationPatterns[k] = new RegExp('\\b' + escapeRegExp(k) + '\\b', 'gi');
+            });
+        }
+
         // Important contextual keywords that might indicate relevance
         const importantKeywords = [
             "important", "significant", "key", "major", "critical", "essential", "crucial", 
@@ -1356,6 +1393,7 @@
                 header: true,
                 dynamicTyping: true,
                 skipEmptyLines: true,
+                worker: true,
                 complete: function(results) {
                     // Log the column names to debug
                     console.log("Location CSV Headers:", results.meta.fields);
@@ -1455,7 +1493,15 @@
             
             // Update the locationKeywords array from the new data
             locationKeywords = Object.keys(locationCoordinates);
-            
+
+            // Pre-compile location patterns for performance
+            let escapedLocationPatterns = {};
+            if (locationKeywords && Array.isArray(locationKeywords)) {
+                locationKeywords.forEach(k => {
+                    escapedLocationPatterns[k] = new RegExp('\\b' + escapeRegExp(k) + '\\b', 'gi');
+                });
+            }
+
             // Process the analysis file
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -1504,6 +1550,7 @@
                 header: true,
                 dynamicTyping: true,
                 skipEmptyLines: true,
+                worker: true,
                 complete: function(results) {
                     // Log the column names to debug
                     console.log("CSV Headers:", results.meta.fields);
@@ -1675,7 +1722,8 @@
         }
 
         function getMarkerRadius(count) {
-            return Math.min(25, Math.max(8, Math.log(count) * 3.5));
+            const c = Math.max(1, Number(count) || 0);
+            return Math.min(25, Math.max(8, Math.log(c) * 3.5));
         }
 
         // Process the raw text to find and count locations
@@ -1700,7 +1748,7 @@
                 // Search for each location in the text
                 for (const location of locationKeywords) {
                     // Case insensitive regex search with word boundaries
-                    const regex = new RegExp(`\\b${location}\\b`, 'gi');
+                    const regex = new RegExp(`\\b${escapeRegExp(location)}\\b`, 'gi');
                     let matches = [];
                     let match;
                     
@@ -1997,18 +2045,16 @@
             if (contextStart > 0) quote = "..." + quote;
             if (contextEnd < text.length) quote = quote + "...";
             
-            // For multiple keywords, highlight all possible variants
+            // For multiple keywords, highlight all possible variants using safe function
             if (typeof location === 'string') {
                 // Single keyword case (backward compatibility)
-                quote = quote.replace(new RegExp(`\\b${location}\\b`, 'gi'), `<strong>${location}</strong>`);
+                quote = highlightTermsSafe(quote, location);
             } else if (Array.isArray(location)) {
                 // Multiple keywords case
-                location.forEach(keyword => {
-                    quote = quote.replace(new RegExp(`\\b${keyword}\\b`, 'gi'), `<strong>${keyword}</strong>`);
-                });
+                quote = highlightTermsSafe(quote, location);
             } else {
                 // Just highlight the term as-is if we received unexpected type
-                quote = quote.replace(new RegExp(`\\b${location}\\b`, 'gi'), `<strong>${location}</strong>`);
+                quote = highlightTermsSafe(quote, location);
             }
             
             return quote;
@@ -2080,10 +2126,10 @@
                         
                         quoteElement.innerHTML = `
                             <blockquote>${quote.quote}</blockquote>
-                            <div class="quote-source">Source: ${formattedDate}</div>
-                            <div class="quote-relevance" title="${scoreDetails}">
+                            <div class="quote-source">Source: ${escapeHTML(formattedDate)}</div>
+                            <div class="quote-relevance" title="${escapeHTML(scoreDetails)}">
                                 Relevance: <span class="relevance-score">${quote.score}/20</span>
-                                <div class="relevance-meter" title="${scoreDetails}">
+                                <div class="relevance-meter" title="${escapeHTML(scoreDetails)}">
                                     <div class="relevance-fill" style="width: ${relevancePercent}%"></div>
                                 </div>
                             </div>
@@ -2128,18 +2174,38 @@
                 const listItem = document.createElement('li');
                 listItem.className = 'location-item';
                 listItem.setAttribute('data-name', location.name);
-                listItem.innerHTML = `
-                    <div class="location-details">
-                        <div class="location-name">${index + 1}. ${location.name}</div>
-                        <div class="location-count">Mentioned in ${location.articleCount} articles</div>
-                    </div>
-                    <div class="count-badge">${location.count}</div>
-                `;
-                
+
+                // Create location details div
+                const detailsDiv = document.createElement('div');
+                detailsDiv.className = 'location-details';
+
+                // Create location name div
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'location-name';
+                nameDiv.textContent = `${index + 1}. ${location.name}`;
+
+                // Create location count div
+                const countDiv = document.createElement('div');
+                countDiv.className = 'location-count';
+                countDiv.textContent = `Mentioned in ${location.articleCount} articles`;
+
+                // Append to details div
+                detailsDiv.appendChild(nameDiv);
+                detailsDiv.appendChild(countDiv);
+
+                // Create count badge
+                const badge = document.createElement('div');
+                badge.className = 'count-badge';
+                badge.textContent = location.count;
+
+                // Append to list item
+                listItem.appendChild(detailsDiv);
+                listItem.appendChild(badge);
+
                 listItem.addEventListener('click', () => {
                     showLocationDetails(location);
                 });
-                
+
                 locationList.appendChild(listItem);
             });
         }
@@ -2164,15 +2230,15 @@
                 // Create tooltip with period-specific info if a period is selected
                 let tooltipContent = `
                     <div>
-                        <strong>${location.name}</strong>
+                        <strong>${escapeHTML(location.name)}</strong>
                         <div>${location.count} mentions in ${location.articleCount} articles</div>
                     </div>
                 `;
-                
+
                 if (selectedPeriod) {
                     tooltipContent = `
                         <div>
-                            <strong>${location.name}</strong>
+                            <strong>${escapeHTML(location.name)}</strong>
                             <div>${location.count} mentions in ${location.articleCount} articles (${selectedPeriod.start}-${selectedPeriod.end})</div>
                         </div>
                     `;
@@ -2237,7 +2303,7 @@
                 if (selectedPeriod) {
                     const filteredData = rawData.filter(article => {
                         const year = article.Year || article.year;
-                        return year >= selectedPeriod.start && year <= period.end;
+                        return year >= selectedPeriod.start && year <= selectedPeriod.end;
                     });
                     filteredLocations = processText(filteredData);
                 } else {
@@ -2320,9 +2386,9 @@
                 // Check for each keyword
                 for (const keyword of keywords) {
                     // Find all mentions of this keyword
-                    const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
+                    const regex = new RegExp(`\\b${escapeRegExp(keyword)}\\b`, 'gi');
                     let match;
-                    
+
                     while ((match = regex.exec(text)) !== null) {
                         // Score this mention
                         const score = evaluateMentionImportance(text, match.index, keyword);
@@ -2395,9 +2461,9 @@
                 // For each keyword in the list
                 for (const keyword of keywords) {
                     // Find all mentions of this keyword
-                    const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
+                    const regex = new RegExp(`\\b${escapeRegExp(keyword)}\\b`, 'gi');
                     let match;
-                    
+
                     while ((match = regex.exec(text)) !== null) {
                         const keywordPos = match.index;
                         
@@ -2532,7 +2598,7 @@
                 
                 // Count mentions of each keyword
                 for (const keyword of keywords) {
-                    const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
+                    const regex = new RegExp(`\\b${escapeRegExp(keyword)}\\b`, 'gi');
                     const matches = text.match(regex);
                     if (matches) {
                         articleCount += matches.length;
@@ -2624,7 +2690,7 @@
             const quotesSection = document.createElement('div');
             quotesSection.className = 'keyword-section';
             quotesSection.innerHTML = `
-                <div class="keyword-section-title">${t.mostRelevantQuotes.replace('{keyword}', keyword)}</div>
+                <div class="keyword-section-title">${t.mostRelevantQuotes.replace('{keyword}', escapeHTML(keyword))}</div>
                 <div id="keyword-quotes-container"></div>
             `;
             resultsContainer.appendChild(quotesSection);
@@ -2654,10 +2720,10 @@
                     
                     quoteElement.innerHTML = `
                         <blockquote>${quote.quote}</blockquote>
-                        <div class="quote-source">Source: ${formattedDate}</div>
-                        <div class="quote-relevance" title="${scoreDetails}">
+                        <div class="quote-source">Source: ${escapeHTML(formattedDate)}</div>
+                        <div class="quote-relevance" title="${escapeHTML(scoreDetails)}">
                             Relevance: <span class="relevance-score">${quote.score}/20</span>
-                            <div class="relevance-meter" title="${scoreDetails}">
+                            <div class="relevance-meter" title="${escapeHTML(scoreDetails)}">
                                 <div class="relevance-fill" style="width: ${relevancePercent}%"></div>
                             </div>
                         </div>
