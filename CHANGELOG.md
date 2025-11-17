@@ -187,8 +187,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Fixed language default behavior**
   - Added language settings version control to force English default
+  - Current version: LANG_SETTINGS_VERSION = '3'
   - Prevents localStorage from overriding English default on updates
   - User language preferences are preserved within same settings version
+  - Version incremented to '3' to reset all users to English default
 
 - **Fixed CSV loading freeze issue**
   - Modified CSP to allow Web Workers (worker-src 'self' blob:; child-src 'self' blob:)
@@ -219,6 +221,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `39cb101` - Fix chart centering by using auto width and parent justifyContent (partial fix)
 - `cf68f71` - Update CHANGELOG.md with correct chart centering fix
 - `a267923` - Apply dual-level centering for chart alignment (complete fix ✅)
+- `d79b0f9` - Update CHANGELOG.md with dual-level centering fix
+- `3920d9e` - Increment language settings version to force English default
 
 ---
 
