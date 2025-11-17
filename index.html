@@ -1062,7 +1062,7 @@
             if (!terms || terms.length === 0) return escaped;
             const termsArray = Array.isArray(terms) ? terms : [terms];
             const pattern = termsArray.map(t => `\\b${escapeRegExp(t)}\\b`).join('|');
-            return escaped.replace(new RegExp(pattern, 'gi'), m => `<strong>${escapeHTML(m)}</strong>`);
+            return escaped.replace(new RegExp(pattern, 'gi'), m => `<strong>${m}</strong>`); // Fixed: Avoid double-escaping
         }
 
         // Language translations
