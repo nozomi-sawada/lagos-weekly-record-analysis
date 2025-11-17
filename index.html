@@ -1393,7 +1393,6 @@
                 header: true,
                 dynamicTyping: true,
                 skipEmptyLines: true,
-                worker: true,
                 complete: function(results) {
                     // Log the column names to debug
                     console.log("Location CSV Headers:", results.meta.fields);
@@ -1550,11 +1549,10 @@
                 header: true,
                 dynamicTyping: true,
                 skipEmptyLines: true,
-                worker: true,
                 complete: function(results) {
                     // Log the column names to debug
                     console.log("CSV Headers:", results.meta.fields);
-                    
+
                     // Store raw data
                     rawData = results.data;
                     

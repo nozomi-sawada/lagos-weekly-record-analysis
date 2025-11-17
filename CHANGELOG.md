@@ -171,15 +171,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Handles NaN cases gracefully
 
 #### Performance Improvements
-- **Enabled Papa.parse Web Worker mode**
-  - Added `worker: true` to CSV parsing options
-  - Offloads parsing to background thread
-  - Prevents UI blocking during large file processing
-
 - **Pre-compiled RegExp patterns**
   - Added `escapedLocationPatterns` cache
   - Pre-compiles location search patterns once
   - Significantly improves search performance for large datasets
+
+#### UI/UX Improvements
+- **Fixed chart alignment in enlarged modal**
+  - Added `justifyContent: 'center'` to chart container
+  - Charts now display centered when data points are few
+  - Improves visual appearance for small datasets
+
+- **Fixed CSV loading freeze issue**
+  - Removed `worker: true` from Papa.parse configuration
+  - Web Worker mode was incompatible with some browser environments
+  - CSV files now load reliably across all environments
+  - Resolves "Reading location data..." freeze issue
 
 ### Commits
 - `3c40890` - Add bilingual (English/Japanese) support to documentation and application
@@ -189,6 +196,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `798d38f` - Clarify keyword search UI to avoid misconception about auto-detection
 - `e15e60a` - Add CHANGELOG.md to document bilingual implementation
 - `e0423e0` - Apply comprehensive security fixes and bug fixes
+- `82a3461` - Update CHANGELOG.md with comprehensive security fixes documentation
+- `fbccf73` - Fix chart alignment in enlarged modal view
 
 ---
 
