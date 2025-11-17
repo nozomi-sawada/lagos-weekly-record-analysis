@@ -121,6 +121,66 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `README.en.md` - New file (English documentation)
 - `README.ja.md` - New file (Japanese documentation)
 
+### Security Hardening
+
+#### XSS (Cross-Site Scripting) Prevention
+- **Added security utility functions**
+  - `escapeHTML()` - Escapes HTML special characters (&, <, >, ", ')
+  - `escapeRegExp()` - Escapes RegExp special characters
+  - `highlightTermsSafe()` - Safely highlights search terms with HTML escaping
+
+- **Fixed innerHTML vulnerabilities** (5 instances)
+  - Replaced innerHTML with safe DOM manipulation (createElement + textContent) in location list rendering
+  - Escaped location names in Leaflet tooltips and popups
+  - Escaped user data in quote display elements (dates, scores)
+  - Escaped keyword in keyword analysis section titles
+  - All CSV-derived data now properly escaped before DOM insertion
+
+#### RegExp Injection Prevention
+- **Fixed 7 instances of unsafe regex construction**
+  - Location keyword search in processText()
+  - Keyword search in analyzeKeyword() (multiple instances)
+  - Keyword search in getYearlyMentions()
+  - All RegExp() calls now use escapeRegExp() wrapper
+  - Prevents ReDoS (Regular Expression Denial of Service) attacks
+  - Prevents regex syntax errors from user input
+
+#### Content Security Policy (CSP)
+- **Added CSP meta tag** to restrict content sources
+  - Scripts: 'self', 'unsafe-inline', cdnjs.cloudflare.com only
+  - Images: 'self', data URIs, OpenStreetMap tiles only
+  - Styles: 'self', 'unsafe-inline', cdnjs.cloudflare.com only
+  - Prevents loading of malicious external resources
+
+#### Subresource Integrity (SRI)
+- **Added integrity hashes to all CDN resources**
+  - Leaflet CSS (1.9.4): SHA-384 hash
+  - PapaParse (5.4.1): SHA-512 hash
+  - Leaflet JS (1.9.4): SHA-512 hash
+  - Added crossorigin="anonymous" attributes
+  - Prevents CDN compromise attacks
+
+#### Additional Logic Fixes
+- **Fixed period.end reference error**
+  - Changed `period.end` to `selectedPeriod.end` in filter logic
+  - Prevents runtime errors during time period filtering
+
+- **Fixed getMarkerRadius zero handling**
+  - Added `Math.max(1, Number(count) || 0)` to prevent Math.log(0)
+  - Prevents -Infinity radius values
+  - Handles NaN cases gracefully
+
+#### Performance Improvements
+- **Enabled Papa.parse Web Worker mode**
+  - Added `worker: true` to CSV parsing options
+  - Offloads parsing to background thread
+  - Prevents UI blocking during large file processing
+
+- **Pre-compiled RegExp patterns**
+  - Added `escapedLocationPatterns` cache
+  - Pre-compiles location search patterns once
+  - Significantly improves search performance for large datasets
+
 ### Commits
 - `3c40890` - Add bilingual (English/Japanese) support to documentation and application
 - `6d99b19` - Fix language switcher: default to English and translate keyword results
@@ -128,6 +188,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `f40ff80` - Translate '(+ variations)' suffix in keyword display
 - `798d38f` - Clarify keyword search UI to avoid misconception about auto-detection
 - `e15e60a` - Add CHANGELOG.md to document bilingual implementation
+- `e0423e0` - Apply comprehensive security fixes and bug fixes
 
 ---
 
