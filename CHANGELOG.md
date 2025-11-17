@@ -179,8 +179,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### UI/UX Improvements
 - **Fixed chart alignment in enlarged modal**
   - Set barContainer width to 'auto' when data points are few
-  - Applied justifyContent: center to parent element (container)
-  - Charts with few data points now properly display centered
+  - Applied dual-level centering: barContainer elements + parent container
+  - Child level: barContainer uses display: flex and justifyContent: center
+  - Parent level: container uses justifyContent: center for sparse data, flex-start for abundant data
+  - Charts with few data points now perfectly display centered
   - Improves visual appearance for small datasets
 
 - **Fixed language default behavior**
@@ -214,7 +216,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `7246d05` - Update CHANGELOG.md with chart and language fixes
 - `67b1fec` - Correct chart alignment by applying flex to barContainer (still incorrect)
 - `489e452` - Update CHANGELOG.md with corrected chart alignment fix
-- `39cb101` - Fix chart centering by using auto width and parent justifyContent (correct fix ✅)
+- `39cb101` - Fix chart centering by using auto width and parent justifyContent (partial fix)
+- `cf68f71` - Update CHANGELOG.md with correct chart centering fix
+- `a267923` - Apply dual-level centering for chart alignment (complete fix ✅)
 
 ---
 
