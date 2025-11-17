@@ -1377,23 +1377,30 @@
             // Read and process the file
             const reader = new FileReader();
             reader.onload = function(e) {
+                console.log("[DEBUG] FileReader onload triggered for location file");
                 const csvData = e.target.result;
                 processLocationCSV(csvData);
             };
-            reader.onerror = function() {
+            reader.onerror = function(error) {
+                console.error("[DEBUG] FileReader error:", error);
                 document.getElementById('upload-status').textContent = translations[currentLanguage].errorReadingLocation;
             };
+            console.log("[DEBUG] Starting to read location file:", file.name);
             reader.readAsText(file);
         }
         
         // Process location CSV data
         function processLocationCSV(csvData) {
+            console.log("[DEBUG] processLocationCSV called, data length:", csvData ? csvData.length : 0);
+
             // Parse CSV using PapaParse
             Papa.parse(csvData, {
                 header: true,
                 dynamicTyping: true,
                 skipEmptyLines: true,
                 complete: function(results) {
+                    console.log("[DEBUG] Papa.parse complete callback triggered");
+                    console.log("[DEBUG] Parsed rows:", results.data ? results.data.length : 0);
                     // Log the column names to debug
                     console.log("Location CSV Headers:", results.meta.fields);
                     
@@ -1417,9 +1424,12 @@
                     updateStartButtonVisibility();
                 },
                 error: function(error) {
+                    console.error("[DEBUG] Papa.parse error:", error);
                     document.getElementById('upload-status').textContent = `${translations[currentLanguage].failedParseLocation} ${error.message}`;
                 }
             });
+
+            console.log("[DEBUG] Papa.parse initiated");
         }
         
         // Process location data from CSV to format needed by application
@@ -1544,12 +1554,16 @@
         
         // Process CSV data
         function processCSVData(csvData) {
+            console.log("[DEBUG] processCSVData called, data length:", csvData ? csvData.length : 0);
+
             // Parse CSV using PapaParse
             Papa.parse(csvData, {
                 header: true,
                 dynamicTyping: true,
                 skipEmptyLines: true,
                 complete: function(results) {
+                    console.log("[DEBUG] Analysis CSV Papa.parse complete callback triggered");
+                    console.log("[DEBUG] Parsed rows:", results.data ? results.data.length : 0);
                     // Log the column names to debug
                     console.log("CSV Headers:", results.meta.fields);
 
@@ -1584,9 +1598,12 @@
                     analyzeKeyword();
                 },
                 error: function(error) {
+                    console.error("[DEBUG] Analysis CSV Papa.parse error:", error);
                     showError(translations[currentLanguage].failedParseCSV + " " + error.message);
                 }
             });
+
+            console.log("[DEBUG] Analysis CSV Papa.parse initiated");
         }
         
         // Extract unique years from the data
