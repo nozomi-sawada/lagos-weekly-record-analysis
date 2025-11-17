@@ -183,10 +183,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improves visual appearance for small datasets
 
 - **Fixed CSV loading freeze issue**
-  - Removed `worker: true` from Papa.parse configuration
-  - Web Worker mode was incompatible with some browser environments
-  - CSV files now load reliably across all environments
-  - Resolves "Reading location data..." freeze issue
+  - Modified CSP to allow Web Workers (worker-src 'self' blob:; child-src 'self' blob:)
+  - Enabled Papa.parse worker mode (worker: true) for better performance with large datasets
+  - Prevents UI freezing when processing large CSV files
+  - Resolves "Reading location data..." freeze issue while maintaining high performance
 
 ### Commits
 - `3c40890` - Add bilingual (English/Japanese) support to documentation and application
@@ -198,6 +198,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `e0423e0` - Apply comprehensive security fixes and bug fixes
 - `82a3461` - Update CHANGELOG.md with comprehensive security fixes documentation
 - `fbccf73` - Fix chart alignment in enlarged modal view
+- `353aa1f` - Fix critical CSV loading freeze issue
+- `7285212` - Add comprehensive debug logging for CSV loading
+- `18e68f2` - Fix CSV loading freeze by disabling Papa.parse Web Workers (temporary fix)
+- (pending) - Enable Papa.parse Web Workers with CSP modification for large datasets
 
 ---
 
