@@ -201,7 +201,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `353aa1f` - Fix critical CSV loading freeze issue
 - `7285212` - Add comprehensive debug logging for CSV loading
 - `18e68f2` - Fix CSV loading freeze by disabling Papa.parse Web Workers (temporary fix)
-- (pending) - Enable Papa.parse Web Workers with CSP modification for large datasets
+- `c3371a3` - Enable Papa.parse Web Workers with CSP modification for large datasets
 
 ---
 
