@@ -1752,26 +1752,37 @@
             const locationArticles = {};
             const locationQuotes = {};
             const locationYears = {}; // Track mentions by year
-            
+
+            // [FIXED] Performance improvement: pre-compile regex patterns for all locations
+            const locationPatterns = {};
+            locationKeywords.forEach(location => {
+                locationPatterns[location] = new RegExp(`\\b${escapeRegExp(location)}\\b`, 'gi');
+            });
+
             textData.forEach(article => {
                 const text = article.text || "";
-                
+
                 // Handle publication date
                 let publicationDate = article["Publication Date"] || article["Publication Date "] || "";
-                
+
                 // Get year
                 const year = article.Year || article.year;
-                
+
                 // Track locations found in this article to count unique articles
                 const locationsInThisArticle = new Set();
-                
+
                 // Search for each location in the text
                 for (const location of locationKeywords) {
-                    // Case insensitive regex search with word boundaries
-                    const regex = new RegExp(`\\b${escapeRegExp(location)}\\b`, 'gi');
+                    // [FIXED] Use pre-compiled regex pattern (major performance improvement)
+                    const regex = locationPatterns[location];
+                    if (!regex) continue;
+
                     let matches = [];
                     let match;
-                    
+
+                    // [CRITICAL] Reset lastIndex for global regex reuse
+                    regex.lastIndex = 0;
+
                     // Find all matches and collect their positions
                     while ((match = regex.exec(text)) !== null) {
                         matches.push({
@@ -2412,26 +2423,36 @@
         // Function to extract the best quotes for multiple keywords
         function extractBestQuotesForMultipleKeywords(keywords, numberOfQuotes = 10) {
             const allQuotes = [];
-            
+
+            // [FIXED] Performance improvement: pre-compile regex patterns for all keywords
+            const keywordPatterns = {};
+            keywords.forEach(keyword => {
+                keywordPatterns[keyword] = new RegExp(`\\b${escapeRegExp(keyword)}\\b`, 'gi');
+            });
+
             // Process all articles
             rawData.forEach(article => {
                 const text = article.text || "";
                 const publicationDate = article["Publication Date"] || article["Publication Date "] || "";
                 const year = article.Year || article.year;
-                
+
                 // Check for each keyword
                 for (const keyword of keywords) {
-                    // Find all mentions of this keyword
-                    const regex = new RegExp(`\\b${escapeRegExp(keyword)}\\b`, 'gi');
-                    let match;
+                    // [FIXED] Use pre-compiled regex pattern
+                    const regex = keywordPatterns[keyword];
+                    if (!regex) continue;
 
+                    // [CRITICAL] Reset lastIndex for global regex reuse
+                    regex.lastIndex = 0;
+
+                    let match;
                     while ((match = regex.exec(text)) !== null) {
                         // Score this mention
                         const score = evaluateMentionImportance(text, match.index, keyword);
-                        
+
                         // Extract quote with proper sentence boundaries
                         const quote = extractQuoteWithSentenceBoundaries(text, match.index, keyword);
-                        
+
                         // Add to quotes collection
                         allQuotes.push({
                             quote: quote,
@@ -2486,20 +2507,30 @@
         function findRelatedTermsForMultipleKeywords(keywords) {
             // Context window size (characters on either side of keyword)
             const contextWindowSize = 100;
-            
+
             // Collect all words within context windows
             const wordCounts = {};
             const wordProximity = {}; // Average distance from keyword
-            
+
+            // [FIXED] Performance improvement: pre-compile regex patterns for all keywords
+            const keywordPatterns = {};
+            keywords.forEach(keyword => {
+                keywordPatterns[keyword] = new RegExp(`\\b${escapeRegExp(keyword)}\\b`, 'gi');
+            });
+
             rawData.forEach(article => {
                 const text = article.text || "";
-                
+
                 // For each keyword in the list
                 for (const keyword of keywords) {
-                    // Find all mentions of this keyword
-                    const regex = new RegExp(`\\b${escapeRegExp(keyword)}\\b`, 'gi');
-                    let match;
+                    // [FIXED] Use pre-compiled regex pattern
+                    const regex = keywordPatterns[keyword];
+                    if (!regex) continue;
 
+                    // [CRITICAL] Reset lastIndex for global regex reuse
+                    regex.lastIndex = 0;
+
+                    let match;
                     while ((match = regex.exec(text)) !== null) {
                         const keywordPos = match.index;
                         
@@ -2622,25 +2653,37 @@
         // Get yearly mentions of multiple keywords
         function getYearlyMentionsForMultipleKeywords(keywords) {
             const yearlyMentions = {};
-            
+
+            // [FIXED] Performance improvement: pre-compile regex patterns for all keywords
+            const keywordPatterns = {};
+            keywords.forEach(keyword => {
+                keywordPatterns[keyword] = new RegExp(`\\b${escapeRegExp(keyword)}\\b`, 'gi');
+            });
+
             rawData.forEach(article => {
                 const text = article.text || "";
                 const year = article.Year || article.year;
-                
+
                 if (!year) return;
-                
+
                 // Initialize count for this article
                 let articleCount = 0;
-                
+
                 // Count mentions of each keyword
                 for (const keyword of keywords) {
-                    const regex = new RegExp(`\\b${escapeRegExp(keyword)}\\b`, 'gi');
+                    // [FIXED] Use pre-compiled regex pattern
+                    const regex = keywordPatterns[keyword];
+                    if (!regex) continue;
+
+                    // [CRITICAL] Reset lastIndex for global regex reuse
+                    regex.lastIndex = 0;
+
                     const matches = text.match(regex);
                     if (matches) {
                         articleCount += matches.length;
                     }
                 }
-                
+
                 // Add to yearly totals
                 if (articleCount > 0) {
                     yearlyMentions[year] = (yearlyMentions[year] || 0) + articleCount;
