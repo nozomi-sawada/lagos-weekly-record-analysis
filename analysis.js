@@ -202,26 +202,9 @@
 
         // Initialize language on page load
         function initializeLanguage() {
-            // Version control for language settings - increment when default behavior changes
-            const LANG_SETTINGS_VERSION = '5';  // Incremented again to force English default
-            const storedVersion = localStorage.getItem('langSettingsVersion');
-
-            // If version mismatch or first visit, reset to English
-            if (storedVersion !== LANG_SETTINGS_VERSION) {
-                localStorage.setItem('langSettingsVersion', LANG_SETTINGS_VERSION);
-                localStorage.setItem('preferredLanguage', 'en');
-                currentLanguage = 'en';
-            } else {
-                // Check for stored preference
-                const stored = localStorage.getItem('preferredLanguage');
-                if (stored && (stored === 'en' || stored === 'ja')) {
-                    currentLanguage = stored;
-                } else {
-                    // Default to English for academic/international use
-                    currentLanguage = 'en';
-                }
-            }
-
+            // Always default to English for academic/international use
+            // User preferences are saved when they manually switch languages
+            currentLanguage = 'en';
             switchLanguage(currentLanguage);
         }
 

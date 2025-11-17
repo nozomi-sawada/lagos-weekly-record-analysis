@@ -73,8 +73,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Quote Highlighting**: Restored safe keyword highlighting in quote displays using `highlightTermsSafe`
 - **Event Handlers**: Migrated all remaining `onclick` handlers to `addEventListener` for consistency
 - **Language Initialization**: Fixed default language to always start with English
-  - Incremented language settings version to force reset to English
-  - Removed duplicate `initializeLanguage` call that caused inconsistent behavior
+  - Simplified `initializeLanguage()` to always default to English on page load
+  - Removed complex localStorage version checking that was causing Japanese to appear
+  - Page now consistently displays English when opened, regardless of browser cache
+  - User language preference is still saved when manually switching languages
 - **Performance**: Fixed critical freeze issues by using pre-compiled regex patterns
   - Fixed `processText` function: Eliminated repeated `new RegExp()` creation in location search loop
   - Fixed `extractBestQuotesForMultipleKeywords`: Pre-compile patterns for all keywords
