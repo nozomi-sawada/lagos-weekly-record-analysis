@@ -1242,13 +1242,24 @@
 
         // Initialize language on page load
         function initializeLanguage() {
-            // Check for stored preference
-            const stored = localStorage.getItem('preferredLanguage');
-            if (stored && (stored === 'en' || stored === 'ja')) {
-                currentLanguage = stored;
-            } else {
-                // Default to English for academic/international use
+            // Version control for language settings - increment when default behavior changes
+            const LANG_SETTINGS_VERSION = '2';
+            const storedVersion = localStorage.getItem('langSettingsVersion');
+
+            // If version mismatch or first visit, reset to English
+            if (storedVersion !== LANG_SETTINGS_VERSION) {
+                localStorage.setItem('langSettingsVersion', LANG_SETTINGS_VERSION);
+                localStorage.setItem('preferredLanguage', 'en');
                 currentLanguage = 'en';
+            } else {
+                // Check for stored preference
+                const stored = localStorage.getItem('preferredLanguage');
+                if (stored && (stored === 'en' || stored === 'ja')) {
+                    currentLanguage = stored;
+                } else {
+                    // Default to English for academic/international use
+                    currentLanguage = 'en';
+                }
             }
 
             switchLanguage(currentLanguage);
@@ -2895,9 +2906,8 @@
                 if (modal) {
                     modal.style.display = 'block';
 
-                    // データが少ない場合に中央揃えにする
-                    barContainer.style.display = 'flex';
-                    barContainer.style.justifyContent = 'center';
+                    // データが少ない場合に中央揃えにする（親要素に設定）
+                    container.style.justifyContent = 'center';
 
                     // スクロールの位置を左端に設定
                     setTimeout(() => {
