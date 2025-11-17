@@ -72,6 +72,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Tab Navigation**: Fixed data-tab attribute implementation for proper tab switching
 - **Quote Highlighting**: Restored safe keyword highlighting in quote displays using `highlightTermsSafe`
 - **Event Handlers**: Migrated all remaining `onclick` handlers to `addEventListener` for consistency
+- **Language Initialization**: Fixed default language to always start with English
+  - Incremented language settings version to force reset to English
+  - Removed duplicate `initializeLanguage` call that caused inconsistent behavior
 - **Performance**: Fixed critical freeze issues by using pre-compiled regex patterns
   - Fixed `processText` function: Eliminated repeated `new RegExp()` creation in location search loop
   - Fixed `extractBestQuotesForMultipleKeywords`: Pre-compile patterns for all keywords
@@ -89,6 +92,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `efa80c5` - Fix processText performance bottleneck by using pre-compiled regex patterns
 - `68bd3f7` - Update CHANGELOG with performance fix details
 - `a6fb474` - Fix keyword analysis performance bottleneck: pre-compile regex in 3 functions
+- `183b432` - Update CHANGELOG with complete performance fix details
+- `3d82bf9` - Fix language initialization: force English default and remove duplicate call
 
 ---
 
