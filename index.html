@@ -1398,6 +1398,7 @@
                 header: true,
                 dynamicTyping: true,
                 skipEmptyLines: true,
+                worker: false,
                 complete: function(results) {
                     console.log("[DEBUG] Papa.parse complete callback triggered");
                     console.log("[DEBUG] Parsed rows:", results.data ? results.data.length : 0);
@@ -1561,6 +1562,7 @@
                 header: true,
                 dynamicTyping: true,
                 skipEmptyLines: true,
+                worker: false,
                 complete: function(results) {
                     console.log("[DEBUG] Analysis CSV Papa.parse complete callback triggered");
                     console.log("[DEBUG] Parsed rows:", results.data ? results.data.length : 0);
