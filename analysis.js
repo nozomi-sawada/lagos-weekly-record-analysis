@@ -203,7 +203,7 @@
         // Initialize language on page load
         function initializeLanguage() {
             // Version control for language settings - increment when default behavior changes
-            const LANG_SETTINGS_VERSION = '3';
+            const LANG_SETTINGS_VERSION = '4';  // Incremented to force English default
             const storedVersion = localStorage.getItem('langSettingsVersion');
 
             // If version mismatch or first visit, reset to English
@@ -225,12 +225,8 @@
             switchLanguage(currentLanguage);
         }
 
-        // Call initialization when DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initializeLanguage);
-        } else {
-            initializeLanguage();
-        }
+        // Note: initializeLanguage is called from DOMContentLoaded listener at the end of the file
+        // Do not call it here to avoid duplicate execution
 
         // Here we changed from 'const' to 'let'
         // Known locations with coordinates
