@@ -178,8 +178,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### UI/UX Improvements
 - **Fixed chart alignment in enlarged modal**
-  - Corrected justifyContent application to parent element (.enlarged-chart)
-  - Charts now properly display centered when data points are few
+  - Applied display: flex and justifyContent: center to barContainer element
+  - Bar chart elements now properly centered when data points are few
   - Improves visual appearance for small datasets
 
 - **Fixed language default behavior**
@@ -209,7 +209,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `c3371a3` - Enable Papa.parse Web Workers with CSP modification for large datasets
 - `b50a309` - Update CHANGELOG.md with latest commit hash
 - `23bba2b` - Fix enlarged chart alignment by adding display: flex (partial fix)
-- `11d03ff` - Fix chart alignment and language default issues (complete fix)
+- `11d03ff` - Fix chart alignment and language default issues (language fix complete, chart fix incorrect)
+- `7246d05` - Update CHANGELOG.md with chart and language fixes
+- `67b1fec` - Correct chart alignment by applying flex to barContainer (final complete fix)
 
 ---
 
