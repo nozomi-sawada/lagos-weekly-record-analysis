@@ -72,12 +72,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Tab Navigation**: Fixed data-tab attribute implementation for proper tab switching
 - **Quote Highlighting**: Restored safe keyword highlighting in quote displays using `highlightTermsSafe`
 - **Event Handlers**: Migrated all remaining `onclick` handlers to `addEventListener` for consistency
+- **Performance**: Fixed critical freeze issue by using pre-compiled regex patterns in `processText` function
+  - Eliminated repeated `new RegExp()` creation in hot loop
+  - Added `regex.lastIndex = 0` reset for proper global regex reuse
+  - Massive performance improvement for large CSV datasets
 
 ### Commits
 - `4d37411` - Refactor to 3-file structure with strict CSP
 - `4e1dacc` - Update CHANGELOG.md with v1.2.0 release notes
 - `d300e04` - Add data-tab attributes to nav-tabs for proper tab switching
 - `80462d1` - Fix all analysis.js bugs: data-tab navigation, highlight restoration, addEventListener migration
+- `1da89d1` - Update CHANGELOG.md with bug fix details
+- `efa80c5` - Fix processText performance bottleneck by using pre-compiled regex patterns
 
 ---
 
