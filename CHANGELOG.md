@@ -178,8 +178,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### UI/UX Improvements
 - **Fixed chart alignment in enlarged modal**
-  - Applied display: flex and justifyContent: center to barContainer element
-  - Bar chart elements now properly centered when data points are few
+  - Set barContainer width to 'auto' when data points are few
+  - Applied justifyContent: center to parent element (container)
+  - Charts with few data points now properly display centered
   - Improves visual appearance for small datasets
 
 - **Fixed language default behavior**
@@ -208,10 +209,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `18e68f2` - Fix CSV loading freeze by disabling Papa.parse Web Workers (temporary fix)
 - `c3371a3` - Enable Papa.parse Web Workers with CSP modification for large datasets
 - `b50a309` - Update CHANGELOG.md with latest commit hash
-- `23bba2b` - Fix enlarged chart alignment by adding display: flex (partial fix)
-- `11d03ff` - Fix chart alignment and language default issues (language fix complete, chart fix incorrect)
+- `23bba2b` - Fix enlarged chart alignment by adding display: flex (incorrect approach)
+- `11d03ff` - Fix chart alignment and language default issues (language ✅, chart ❌)
 - `7246d05` - Update CHANGELOG.md with chart and language fixes
-- `67b1fec` - Correct chart alignment by applying flex to barContainer (final complete fix)
+- `67b1fec` - Correct chart alignment by applying flex to barContainer (still incorrect)
+- `489e452` - Update CHANGELOG.md with corrected chart alignment fix
+- `39cb101` - Fix chart centering by using auto width and parent justifyContent (correct fix ✅)
 
 ---
 
