@@ -68,8 +68,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Improved caching** - External CSS and JS can be cached separately
 - **Better developer experience** - Standard modern web development structure
 
+### Bug Fixes
+- **Tab Navigation**: Fixed data-tab attribute implementation for proper tab switching
+- **Quote Highlighting**: Restored safe keyword highlighting in quote displays using `highlightTermsSafe`
+- **Event Handlers**: Migrated all remaining `onclick` handlers to `addEventListener` for consistency
+
 ### Commits
 - `4d37411` - Refactor to 3-file structure with strict CSP
+- `4e1dacc` - Update CHANGELOG.md with v1.2.0 release notes
+- `d300e04` - Add data-tab attributes to nav-tabs for proper tab switching
+- `80462d1` - Fix all analysis.js bugs: data-tab navigation, highlight restoration, addEventListener migration
 
 ---
 
