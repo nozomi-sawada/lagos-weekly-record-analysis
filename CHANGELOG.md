@@ -73,8 +73,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Quote Highlighting**: Restored safe keyword highlighting in quote displays using `highlightTermsSafe`
 - **Event Handlers**: Migrated all remaining `onclick` handlers to `addEventListener` for consistency
 - **Language Initialization**: Fixed default language to always start with English
-  - Simplified `initializeLanguage()` to always default to English on page load
+  - Simplified `initializeLanguage()` to always default to English on page load (analysis.js)
   - Removed complex localStorage version checking that was causing Japanese to appear
+  - Hard-coded title and description in English by removing data-i18n attributes (index.html)
+  - Added version comment to index.html to force browser cache refresh
   - Page now consistently displays English when opened, regardless of browser cache
   - User language preference is still saved when manually switching languages
 - **Performance**: Fixed critical freeze issues by using pre-compiled regex patterns
@@ -96,6 +98,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `a6fb474` - Fix keyword analysis performance bottleneck: pre-compile regex in 3 functions
 - `183b432` - Update CHANGELOG with complete performance fix details
 - `3d82bf9` - Fix language initialization: force English default and remove duplicate call
+- `70ba866` - Simplify language initialization to always default to English
+- `13fdf84` - Fix index.html to ensure English displays by default
 
 ---
 
