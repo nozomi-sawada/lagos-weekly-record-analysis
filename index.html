@@ -2911,10 +2911,19 @@
                 if (modal) {
                     modal.style.display = 'block';
 
-                    // データが少ない場合に中央揃えにする
-                    // 親要素(container)に justifyContent を設定
-                    if (containerWidth < container.clientWidth) {
+                    // 1. barContainer (子) の中身を中央揃え
+                    barContainer.style.display = 'flex';
+                    barContainer.style.justifyContent = 'center';
+
+                    // 2. container (親) で barContainer 自体を中央揃え
+                    const parentWidth = container.clientWidth;
+
+                    if (containerWidth < parentWidth) {
+                        // データが少ない時は、親(container)が子(barContainer)を中央揃え
                         container.style.justifyContent = 'center';
+                    } else {
+                        // データが多い時は、スクロールのため左揃えに戻す
+                        container.style.justifyContent = 'flex-start';
                     }
 
                     // スクロールの位置を左端に設定
