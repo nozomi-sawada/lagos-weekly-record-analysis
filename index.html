@@ -2906,8 +2906,10 @@
                 if (modal) {
                     modal.style.display = 'block';
 
-                    // データが少ない場合に中央揃えにする（親要素に設定）
-                    container.style.justifyContent = 'center';
+                    // グラフ（中身）を中央揃えにするため、
+                    // barContainer 自体を flex コンテナにします。
+                    barContainer.style.display = 'flex';
+                    barContainer.style.justifyContent = 'center';
 
                     // スクロールの位置を左端に設定
                     setTimeout(() => {
