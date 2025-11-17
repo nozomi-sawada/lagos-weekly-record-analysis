@@ -72,10 +72,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Tab Navigation**: Fixed data-tab attribute implementation for proper tab switching
 - **Quote Highlighting**: Restored safe keyword highlighting in quote displays using `highlightTermsSafe`
 - **Event Handlers**: Migrated all remaining `onclick` handlers to `addEventListener` for consistency
-- **Performance**: Fixed critical freeze issue by using pre-compiled regex patterns in `processText` function
-  - Eliminated repeated `new RegExp()` creation in hot loop
-  - Added `regex.lastIndex = 0` reset for proper global regex reuse
-  - Massive performance improvement for large CSV datasets
+- **Performance**: Fixed critical freeze issues by using pre-compiled regex patterns
+  - Fixed `processText` function: Eliminated repeated `new RegExp()` creation in location search loop
+  - Fixed `extractBestQuotesForMultipleKeywords`: Pre-compile patterns for all keywords
+  - Fixed `findRelatedTermsForMultipleKeywords`: Pre-compile patterns for all keywords
+  - Fixed `getYearlyMentionsForMultipleKeywords`: Pre-compile patterns for all keywords
+  - Added `regex.lastIndex = 0` reset for proper global regex reuse in all functions
+  - Massive performance improvement for large CSV datasets (eliminates "Processing data..." freeze)
 
 ### Commits
 - `4d37411` - Refactor to 3-file structure with strict CSP
@@ -84,6 +87,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `80462d1` - Fix all analysis.js bugs: data-tab navigation, highlight restoration, addEventListener migration
 - `1da89d1` - Update CHANGELOG.md with bug fix details
 - `efa80c5` - Fix processText performance bottleneck by using pre-compiled regex patterns
+- `68bd3f7` - Update CHANGELOG with performance fix details
+- `a6fb474` - Fix keyword analysis performance bottleneck: pre-compile regex in 3 functions
 
 ---
 
