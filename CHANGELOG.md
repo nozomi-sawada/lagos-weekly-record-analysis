@@ -76,7 +76,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Simplified `initializeLanguage()` to always default to English on page load (analysis.js)
   - Removed complex localStorage version checking that was causing Japanese to appear
   - Kept data-i18n attributes to maintain language switching functionality (index.html)
-  - Added version comment to index.html to force browser cache refresh
   - Page now consistently displays English when opened, regardless of browser cache
   - Users can manually switch to Japanese using language switcher buttons
   - Language preference is saved when manually switching languages
@@ -100,9 +99,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `183b432` - Update CHANGELOG with complete performance fix details
 - `3d82bf9` - Fix language initialization: force English default and remove duplicate call
 - `70ba866` - Simplify language initialization to always default to English
-- `13fdf84` - Fix index.html to ensure English displays by default (incorrect - removed switching)
-- `827bcf7` - Update CHANGELOG with index.html language fix details
-- `2d0d159` - Restore data-i18n attributes to re-enable language switching (correct fix)
+- `154548a` - Restore data-i18n attributes and remove version comment (final fix)
 
 ---
 
