@@ -223,6 +223,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `a267923` - Apply dual-level centering for chart alignment (complete fix ✅)
 - `d79b0f9` - Update CHANGELOG.md with dual-level centering fix
 - `3920d9e` - Increment language settings version to force English default
+- `76f558c` - Update CHANGELOG.md with language version increment
 
 ---
 
