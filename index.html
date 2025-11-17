@@ -2859,9 +2859,14 @@
                 // Important: Set width based on number of bars
                 // Each bar is 30px wide with 2px margin on each side
                 const containerWidth = yearData.length * 34; // 30px + 2px margin on each side
-                barContainer.style.width = `${containerWidth}px`;
-                // Ensure minimum width is still 100% of parent
-                barContainer.style.minWidth = containerWidth > container.clientWidth ? `${containerWidth}px` : '100%';
+
+                // If data points are few (chart is narrow), use auto width for centering
+                // Otherwise, set explicit width for scrolling
+                if (containerWidth < container.clientWidth) {
+                    barContainer.style.width = 'auto';
+                } else {
+                    barContainer.style.width = `${containerWidth}px`;
+                }
                 
                 container.appendChild(barContainer);
                 
@@ -2906,10 +2911,11 @@
                 if (modal) {
                     modal.style.display = 'block';
 
-                    // グラフ（中身）を中央揃えにするため、
-                    // barContainer 自体を flex コンテナにします。
-                    barContainer.style.display = 'flex';
-                    barContainer.style.justifyContent = 'center';
+                    // データが少ない場合に中央揃えにする
+                    // 親要素(container)に justifyContent を設定
+                    if (containerWidth < container.clientWidth) {
+                        container.style.justifyContent = 'center';
+                    }
 
                     // スクロールの位置を左端に設定
                     setTimeout(() => {
