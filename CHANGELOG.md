@@ -72,13 +72,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Tab Navigation**: Fixed data-tab attribute implementation for proper tab switching
 - **Quote Highlighting**: Restored safe keyword highlighting in quote displays using `highlightTermsSafe`
 - **Event Handlers**: Migrated all remaining `onclick` handlers to `addEventListener` for consistency
-- **Language Initialization**: Fixed default language to always start with English
-  - Simplified `initializeLanguage()` to always default to English on page load (analysis.js)
-  - Removed complex localStorage version checking that was causing Japanese to appear
+- **Language Initialization**: Uses localStorage version checking for language preference
+  - `initializeLanguage()` checks localStorage version and resets to English if version mismatch
+  - Current version: LANG_SETTINGS_VERSION = '3'
   - Kept data-i18n attributes to maintain language switching functionality (index.html)
-  - Page now consistently displays English when opened, regardless of browser cache
-  - Users can manually switch to Japanese using language switcher buttons
-  - Language preference is saved when manually switching languages
+  - Language preference is saved and persisted across sessions
+  - Users can manually switch between English and Japanese using language switcher buttons
 - **Performance**: Fixed critical freeze issues by using pre-compiled regex patterns
   - Fixed `processText` function: Eliminated repeated `new RegExp()` creation in location search loop
   - Fixed `extractBestQuotesForMultipleKeywords`: Pre-compile patterns for all keywords
@@ -97,9 +96,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `68bd3f7` - Update CHANGELOG with performance fix details
 - `a6fb474` - Fix keyword analysis performance bottleneck: pre-compile regex in 3 functions
 - `183b432` - Update CHANGELOG with complete performance fix details
-- `3d82bf9` - Fix language initialization: force English default and remove duplicate call
-- `70ba866` - Simplify language initialization to always default to English
-- `154548a` - Restore data-i18n attributes and remove version comment (final fix)
+- `154548a` - Restore data-i18n attributes (enables language switching)
+- `65af9c6` - Restore analysis.js to commit a6fb474 state with performance fixes
 
 ---
 
