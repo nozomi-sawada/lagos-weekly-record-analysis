@@ -1398,6 +1398,12 @@
         function extractBestQuotesForMultipleKeywords(keywords, numberOfQuotes = 10) {
             const allQuotes = [];
 
+            // [FIXED] Pre-compile regex patterns for all keywords (performance improvement)
+            const keywordPatterns = {};
+            keywords.forEach(keyword => {
+                keywordPatterns[keyword] = new RegExp(`\\b${escapeRegExp(keyword)}\\b`, 'gi');
+            });
+
             // Process all articles
             rawData.forEach(article => {
                 const text = article.text || "";
@@ -1406,8 +1412,9 @@
 
                 // Check for each keyword
                 for (const keyword of keywords) {
-                    // Find all mentions of this keyword
-                    const regex = new RegExp(`\\b${escapeRegExp(keyword)}\\b`, 'gi');
+                    // [FIXED] Use pre-compiled regex pattern
+                    const regex = keywordPatterns[keyword];
+                    regex.lastIndex = 0; // Reset for reuse
                     let match;
 
                     while ((match = regex.exec(text)) !== null) {
@@ -1476,13 +1483,20 @@
             const wordCounts = {};
             const wordProximity = {}; // Average distance from keyword
 
+            // [FIXED] Pre-compile regex patterns for all keywords (performance improvement)
+            const keywordPatterns = {};
+            keywords.forEach(keyword => {
+                keywordPatterns[keyword] = new RegExp(`\\b${escapeRegExp(keyword)}\\b`, 'gi');
+            });
+
             rawData.forEach(article => {
                 const text = article.text || "";
 
                 // For each keyword in the list
                 for (const keyword of keywords) {
-                    // Find all mentions of this keyword
-                    const regex = new RegExp(`\\b${escapeRegExp(keyword)}\\b`, 'gi');
+                    // [FIXED] Use pre-compiled regex pattern
+                    const regex = keywordPatterns[keyword];
+                    regex.lastIndex = 0; // Reset for reuse
                     let match;
 
                     while ((match = regex.exec(text)) !== null) {
@@ -1608,6 +1622,12 @@
         function getYearlyMentionsForMultipleKeywords(keywords) {
             const yearlyMentions = {};
 
+            // [FIXED] Pre-compile regex patterns for all keywords (performance improvement)
+            const keywordPatterns = {};
+            keywords.forEach(keyword => {
+                keywordPatterns[keyword] = new RegExp(`\\b${escapeRegExp(keyword)}\\b`, 'gi');
+            });
+
             rawData.forEach(article => {
                 const text = article.text || "";
                 const year = article.Year || article.year;
@@ -1619,7 +1639,9 @@
 
                 // Count mentions of each keyword
                 for (const keyword of keywords) {
-                    const regex = new RegExp(`\\b${escapeRegExp(keyword)}\\b`, 'gi');
+                    // [FIXED] Use pre-compiled regex pattern
+                    const regex = keywordPatterns[keyword];
+                    regex.lastIndex = 0; // Reset for reuse
                     const matches = text.match(regex);
                     if (matches) {
                         articleCount += matches.length;
