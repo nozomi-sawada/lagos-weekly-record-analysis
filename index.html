@@ -1189,11 +1189,20 @@
         function updateTranslations() {
             const t = translations[currentLanguage];
 
+            // Keys that contain HTML markup (only these should use innerHTML)
+            const htmlKeys = new Set(['keywordInstructions']);
+
             // Update elements with data-i18n attribute
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
                 if (t[key]) {
-                    element.innerHTML = t[key];
+                    // Use innerHTML only for keys that contain HTML markup
+                    // All others use textContent for XSS safety
+                    if (htmlKeys.has(key)) {
+                        element.innerHTML = t[key];
+                    } else {
+                        element.textContent = t[key];
+                    }
                 }
             });
 
@@ -2138,12 +2147,12 @@
                         
                         // Calculate a percentage for the visual meter (normalize score to 0-100%)
                         const relevancePercent = Math.min(100, Math.round((quote.score / 20) * 100));
-                        
+
                         // Create detailed score breakdown for tooltip
                         const scoreDetails = `
                             Raw Score: ${quote.score} / 20
                             Relevance: ${relevancePercent}%
-                            
+
                             Factors that may have contributed:
                             - Position in text
                             - Important keywords nearby
@@ -2151,17 +2160,28 @@
                             - Sentence structure and completeness
                             - Paragraph position
                         `;
-                        
-                        quoteElement.innerHTML = `
-                            <blockquote>${quote.quote}</blockquote>
-                            <div class="quote-source">Source: ${escapeHTML(formattedDate)}</div>
-                            <div class="quote-relevance" title="${escapeHTML(scoreDetails)}">
-                                Relevance: <span class="relevance-score">${quote.score}/20</span>
-                                <div class="relevance-meter" title="${escapeHTML(scoreDetails)}">
-                                    <div class="relevance-fill" style="width: ${relevancePercent}%"></div>
-                                </div>
+
+                        // XSS-safe: Use createElement + textContent for quote data
+                        const blockquote = document.createElement('blockquote');
+                        blockquote.textContent = String(quote.quote ?? "");
+                        quoteElement.appendChild(blockquote);
+
+                        const quoteSource = document.createElement('div');
+                        quoteSource.className = 'quote-source';
+                        quoteSource.textContent = `Source: ${formattedDate ?? "Unknown date"}`;
+                        quoteElement.appendChild(quoteSource);
+
+                        const quoteRelevance = document.createElement('div');
+                        quoteRelevance.className = 'quote-relevance';
+                        quoteRelevance.setAttribute('title', escapeHTML(scoreDetails));
+                        quoteRelevance.innerHTML = `
+                            Relevance: <span class="relevance-score">${Number(quote.score)||0}/20</span>
+                            <div class="relevance-meter" title="${escapeHTML(scoreDetails)}">
+                                <div class="relevance-fill" style="width: ${relevancePercent}%"></div>
                             </div>
                         `;
+                        quoteElement.appendChild(quoteRelevance);
+
                         quotesContainer.appendChild(quoteElement);
                     });
                 } else {
@@ -2285,7 +2305,12 @@
         // Show error message
         function showError(message) {
             const loading = document.getElementById('loading');
-            loading.innerHTML = `<div class="error">${message}</div>`;
+            // XSS-safe: Use textContent instead of innerHTML
+            loading.textContent = "";  // Clear existing content
+            const errDiv = document.createElement('div');
+            errDiv.className = 'error';
+            errDiv.textContent = String(message ?? "Error");  // Safely set as text
+            loading.appendChild(errDiv);
             loading.style.display = 'flex';
         }
         
@@ -2732,12 +2757,12 @@
                     
                     // Calculate a percentage for the visual meter
                     const relevancePercent = Math.min(100, Math.round((quote.score / 20) * 100));
-                    
+
                     // Create detailed score breakdown for tooltip
                     const scoreDetails = `
                         Raw Score: ${quote.score} / 20
                         Relevance: ${relevancePercent}%
-                        
+
                         Factors that may have contributed:
                         - Position in text
                         - Important keywords nearby
@@ -2745,17 +2770,28 @@
                         - Sentence structure and completeness
                         - Paragraph position
                     `;
-                    
-                    quoteElement.innerHTML = `
-                        <blockquote>${quote.quote}</blockquote>
-                        <div class="quote-source">Source: ${escapeHTML(formattedDate)}</div>
-                        <div class="quote-relevance" title="${escapeHTML(scoreDetails)}">
-                            Relevance: <span class="relevance-score">${quote.score}/20</span>
-                            <div class="relevance-meter" title="${escapeHTML(scoreDetails)}">
-                                <div class="relevance-fill" style="width: ${relevancePercent}%"></div>
-                            </div>
+
+                    // XSS-safe: Use createElement + textContent for quote data
+                    const blockquote = document.createElement('blockquote');
+                    blockquote.textContent = String(quote.quote ?? "");
+                    quoteElement.appendChild(blockquote);
+
+                    const quoteSource = document.createElement('div');
+                    quoteSource.className = 'quote-source';
+                    quoteSource.textContent = `Source: ${formattedDate ?? "Unknown date"}`;
+                    quoteElement.appendChild(quoteSource);
+
+                    const quoteRelevance = document.createElement('div');
+                    quoteRelevance.className = 'quote-relevance';
+                    quoteRelevance.setAttribute('title', escapeHTML(scoreDetails));
+                    quoteRelevance.innerHTML = `
+                        Relevance: <span class="relevance-score">${Number(quote.score)||0}/20</span>
+                        <div class="relevance-meter" title="${escapeHTML(scoreDetails)}">
+                            <div class="relevance-fill" style="width: ${relevancePercent}%"></div>
                         </div>
                     `;
+                    quoteElement.appendChild(quoteRelevance);
+
                     quotesContainer.appendChild(quoteElement);
                 });
             } else {
