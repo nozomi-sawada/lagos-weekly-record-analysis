@@ -41,9 +41,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Existing `unsafe-inline` remains for backwards compatibility with inline event handlers
 - Future enhancement: Refactor `onclick` attributes to `addEventListener` to remove `unsafe-inline`
 
+#### Bug Fixes
+- **Double-escaping in highlightTermsSafe**
+  - Fixed bug where highlighted search terms were double-escaped
+  - Changed from `escapeHTML(m)` to `m` in replacement
+  - Matched string is already from escaped text, so re-escaping caused display issues
+  - Location: highlightTermsSafe function (line 1065)
+
 ### Commits
 - `4a438e3` - Fix critical XSS vulnerabilities in quote display and error handling
 - `30c8ec8` - Strengthen Content Security Policy with additional directives
+- `cf3d920` - Update CHANGELOG.md with v1.1.1 security fixes
+- `f78465a` - Fix double-escaping bug in highlightTermsSafe function
 
 ---
 
