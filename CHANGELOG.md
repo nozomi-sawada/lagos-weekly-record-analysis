@@ -7,6 +7,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.1] - 2025-11-17
+
+### Security - Additional XSS Prevention
+
+#### Critical Fixes
+- **Quote Display XSS Vulnerability (2 instances)**
+  - Changed from `innerHTML` with unescaped `quote.quote` to safe DOM construction
+  - Now uses `createElement` + `textContent` for all CSV-derived quote data
+  - Locations: Geographic quote display and Keyword quote display
+  - Prevents XSS injection through malicious content in CSV quote fields
+
+- **Error Message XSS Vulnerability**
+  - Changed `showError()` function from `innerHTML` to `textContent`
+  - Prevents XSS injection through error messages
+  - Location: showError function (lines 2297-2306)
+
+- **Translation System Hardening**
+  - Separated HTML-containing translation keys from plain text keys
+  - Uses `textContent` for all plain text translations (XSS-safe)
+  - Uses `innerHTML` only for whitelisted keys requiring HTML (`keywordInstructions`)
+  - Prevents future XSS if translations are externalized
+  - Location: updateTranslations function (lines 1189-1207)
+
+#### Enhanced Content Security Policy
+- **Added three hardening directives:**
+  - `object-src 'none'`: Prevents loading plugins (Flash, Java, etc.)
+  - `base-uri 'none'`: Prevents base tag injection attacks
+  - `frame-ancestors 'none'`: Prevents clickjacking attacks
+  - Location: CSP meta tag (line 10)
+
+### Note
+- Existing `unsafe-inline` remains for backwards compatibility with inline event handlers
+- Future enhancement: Refactor `onclick` attributes to `addEventListener` to remove `unsafe-inline`
+
+### Commits
+- `4a438e3` - Fix critical XSS vulnerabilities in quote display and error handling
+- `30c8ec8` - Strengthen Content Security Policy with additional directives
+
+---
+
 ## [1.1.0] - 2025-11-16
 
 ### Added - Bilingual Support
