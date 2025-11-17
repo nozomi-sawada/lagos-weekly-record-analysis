@@ -7,6 +7,72 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.2.0] - 2025-11-17
+
+### Changed - Major Refactoring for Security and Maintainability
+
+#### 3-File Architecture
+- **Separated concerns into three distinct files**
+  - `index.html` (190 lines) - Clean HTML structure
+  - `style.css` (861 lines) - All styling rules
+  - `analysis.js` (2053 lines) - All application logic
+
+#### Content Security Policy Hardening
+- **Removed 'unsafe-inline' from CSP directives**
+  - Eliminated from `script-src` directive
+  - Eliminated from `style-src` directive
+  - All inline event handlers converted to `addEventListener`
+  - All inline styles moved to external stylesheet
+  - Now meets strict CSP compliance
+
+#### Event Handler Modernization
+- **Converted all inline event handlers to addEventListener**
+  - Language switcher buttons (2 handlers)
+  - File upload buttons and inputs (4 handlers)
+  - Tab navigation (2 handlers)
+  - Period filter buttons (dynamic handlers)
+  - Display mode controls (2 handlers)
+  - Toggle quotes button
+  - Keyword analyze button
+  - Modal close button
+  - Keyboard event handler (Enter key for keyword input)
+  - All wrapped in `DOMContentLoaded` for proper initialization
+
+#### Code Organization Improvements
+- **Reduced HTML file size by 94%** (3007 → 190 lines)
+- **Better separation of concerns**
+  - HTML: Structure and content only
+  - CSS: All presentation logic isolated
+  - JavaScript: All behavior and interaction logic isolated
+- **Improved maintainability**
+  - Easier to debug issues in specific layers
+  - Simpler to add new features
+  - Better for collaborative development
+  - Facilitates testing and code review
+
+#### Security Benefits
+- **Strengthened CSP eliminates inline code execution**
+  - Prevents entire class of XSS attacks that exploit inline scripts
+  - Prevents inline style injection attacks
+  - Requires all code to be in verified external files
+- **All previous security fixes maintained**
+  - XSS prevention in quote display
+  - XSS prevention in error messages
+  - Safe translation system
+  - RegExp injection prevention
+  - Subresource Integrity (SRI) for CDN resources
+
+#### Performance and Compatibility
+- **No functional changes** - All features work identically
+- **No performance regression** - Same loading and execution speed
+- **Improved caching** - External CSS and JS can be cached separately
+- **Better developer experience** - Standard modern web development structure
+
+### Commits
+- `4d37411` - Refactor to 3-file structure with strict CSP
+
+---
+
 ## [1.1.1] - 2025-11-17
 
 ### Security - Additional XSS Prevention
