@@ -1068,6 +1068,16 @@
                 ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
         }
 
+        // Sanitize HTML but allow only <strong> tags for keyword highlighting
+        function sanitizeQuoteHTML(s) {
+            // First escape all HTML
+            let escaped = escapeHTML(s);
+            // Then restore only <strong> and </strong> tags
+            escaped = escaped.replace(/&lt;strong&gt;/g, '<strong>');
+            escaped = escaped.replace(/&lt;\/strong&gt;/g, '</strong>');
+            return escaped;
+        }
+
         function escapeRegExp(s) {
             return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         }
@@ -2176,9 +2186,9 @@
                             - Paragraph position
                         `;
 
-                        // XSS-safe: Use createElement + textContent for quote data
+                        // XSS-safe: Sanitize but allow <strong> tags for highlighting
                         const blockquote = document.createElement('blockquote');
-                        blockquote.textContent = String(quote.quote ?? "");
+                        blockquote.innerHTML = sanitizeQuoteHTML(String(quote.quote ?? ""));
                         quoteElement.appendChild(blockquote);
 
                         const quoteSource = document.createElement('div');
@@ -2818,9 +2828,9 @@
                         - Paragraph position
                     `;
 
-                    // XSS-safe: Use createElement + textContent for quote data
+                    // XSS-safe: Sanitize but allow <strong> tags for highlighting
                     const blockquote = document.createElement('blockquote');
-                    blockquote.textContent = String(quote.quote ?? "");
+                    blockquote.innerHTML = sanitizeQuoteHTML(String(quote.quote ?? ""));
                     quoteElement.appendChild(blockquote);
 
                     const quoteSource = document.createElement('div');
