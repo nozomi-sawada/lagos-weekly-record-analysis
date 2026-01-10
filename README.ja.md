@@ -13,7 +13,7 @@
 
 ## 🌐 アプリケーションを試す
 
-**[ウェブアプリケーションを起動](https://nozomi-sawada.github.io/lagos-weekly-record-analysis/)**
+**<a href="https://nozomi-sawada.github.io/lagos-weekly-record-analysis/" target="_blank">ウェブアプリケーションを起動</a>**
 
 **サンプルファイル:**
 - <a href="sample_analysis.csv" target="_blank">サンプル分析用CSV</a> - 架空のテキストを含むサンプル記事データ

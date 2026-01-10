@@ -13,7 +13,7 @@ This application is an interactive visualization tool designed to analyze geogra
 
 ## 🌐 Try the Application
 
-**[Launch Web Application](https://nozomi-sawada.github.io/lagos-weekly-record-analysis/)**
+**<a href="https://nozomi-sawada.github.io/lagos-weekly-record-analysis/" target="_blank">Launch Web Application</a>**
 
 **Sample Files:**
 - <a href="sample_analysis.csv" target="_blank">Sample Analysis CSV</a> - Example article data with fictional text

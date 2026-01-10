@@ -29,7 +29,7 @@ This is an interactive visualization tool for analyzing geographic mention patte
 
 ## 🌐 Try the Application / アプリケーションを試す
 
-**[Launch Web Application](https://nozomi-sawada.github.io/lagos-weekly-record-analysis/)**
+**<a href="https://nozomi-sawada.github.io/lagos-weekly-record-analysis/" target="_blank">Launch Web Application</a>**
 
 **Sample Files / サンプルファイル:**
 - <a href="sample_analysis.csv" target="_blank">Sample Analysis CSV</a> - Example article data / サンプル記事データ
