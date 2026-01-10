@@ -23,7 +23,7 @@ Read the documentation in English
 This is an interactive visualization tool for analyzing geographic mention patterns and keywords in the Lagos Weekly Record (1891-1921), a historical Nigerian newspaper.
 
 **日本語:**
-このアプリケーションは、1891年から1921年にかけて発行されたナイジェリアの歴史的新聞「Lagos Weekly Record」における地理的言及パターンとキーワード分析を行うための対話型可視化ツールです。
+このアプリケーションは、1891年から1921年にかけて発行されたナイジェリアの歴史的新聞「Lagos Weekly Record」における地理的言及パターンとキーワード分析を行うための可視化・分析ツールです。
 
 ---
 
