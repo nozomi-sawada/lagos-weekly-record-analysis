@@ -1,73 +1,385 @@
 placename,latitude,longitude
-Lagos,6.5244,3.3792
-Ibadan,7.3775,3.947
+Aba,5.117,7.3667
 Abeokuta,7.1475,3.3619
-Calabar,4.9761,8.3283
-Port Harcourt,4.8156,7.0498
-Kano,12.0022,8.592
-Kaduna,10.5167,7.4333
-Jos,9.8965,8.8583
-Enugu,6.4667,7.5667
-Onitsha,6.1667,6.7833
-Benin City,6.335,5.6037
-Ilorin,8.5,4.55
-Oshogbo,7.7667,4.5567
-Akure,7.25,5.195
-Sokoto,13.0622,5.2339
-Maiduguri,11.8333,13.15
-Lokoja,7.8,6.7333
-Warri,5.5167,5.75
-Ife,7.4806,4.5591
-Oyo,7.843,3.9368
-Ijebu-Ode,6.8202,3.917
-Owerri,5.4833,7.0333
+Abyssinia,9.145,40.4897
 Accra,5.6037,-0.187
-Freetown,8.4657,-13.2317
-Dakar,14.7167,-17.4677
-Conakry,9.6412,-13.5784
-Monrovia,6.3078,-10.8047
-Abidjan,5.3599,-4.0083
-Kumasi,6.6885,-1.6244
-Cape Coast,5.1053,-1.2466
-Lome,6.1319,1.2228
-Cotonou,6.3654,2.4183
-Porto Novo,6.4969,2.6283
+Adamawa,10.06,-2.5
+Africa,8.7832,34.5085
+Agbor,6.2559,6.1921
+Agege,6.6177,3.3244
+Akassa,4.3167,6.0667
+Akure,7.25,5.195
+Albany,4.3167,6.2333
+Alexandria,31.2001,29.9187
+Algiers,36.7538,3.0588
+America,39.8283,-98.5795
+Anambra,6.3167,8.1167
+Anomabu,5.1825,-1.1167
+Antananarivo,-18.7669,46.8691
+Apapa,6.4489,3.3589
+Aro,5.3833,7.9167
+Arochukwu,5.3833,7.9167
+Asaba,6.2,6.7333
+Ashanti,6.7,-1.6333
+Asia,34.0479,100.6197
+Asmara,15.3229,38.9251
+Atijere,6.6147,4.4183
+Atlantic,0,0
+Australia,-25.2744,133.7751
+Axim,4.8676,-2.2417
+Badagry,6.4148,2.8876
 Bamako,12.6392,-8.0029
-Niamey,13.5116,2.1254
-Ouagadougou,12.3714,-1.5197
 Banjul,13.4527,-16.5775
-Bissau,11.8636,-15.5977
-London,51.5074,-0.1278
-Liverpool,53.4084,-2.9916
-Manchester,53.4808,-2.2426
-Bristol,51.4545,-2.5879
-Paris,48.8566,2.3522
-Berlin,52.52,13.405
-Rome,41.9028,12.4964
-Madrid,40.4168,-3.7038
-Lisbon,38.7223,-9.1393
-Brussels,50.8503,4.3517
-Amsterdam,52.3676,4.9041
-Hamburg,53.5511,9.9937
-Cairo,30.0444,31.2357
-Cape Town,-33.9249,18.4241
-Johannesburg,-26.2041,28.0473
-Nairobi,-1.2921,36.8219
-Addis Ababa,9.145,40.4897
-Khartoum,15.5007,32.5599
-Kinshasa,-4.4419,15.2663
-New York,40.7128,-74.006
-Washington,38.9072,-77.0369
-Boston,42.3601,-71.0589
-Yorubaland,7.5,4.5
-Hausaland,12,8.5
-Igboland,5.75,7.5
-Sokoto Caliphate,13.0622,5.2339
+Barcelona,41.3851,2.1734
+Baro,8.6148,6.4103
+Bauchi,10.3103,9.8437
+Bechuanaland,-22.3285,24.6849
+Belgium,50.5039,4.4699
 Benin,6.35,5.6
-Gold Coast,5.55,-0.2
-Sierra Leone,8.4606,-11.7799
-Gambia,13.4432,-15.3101
-Niger River,11,9
+Benin City,6.335,5.6037
+Berlin,52.52,13.405
+Biafra,4,8
+Bida,9.0833,6.0167
 Bight of Benin,6.3333,2.7
 Bight of Biafra,4,8
+Bissau,11.8636,-15.5977
+Bobo Dioulasso,11.1778,-4.2958
+Bolgatanga,10.7867,-0.85
+Bonny,4.45,7.1667
+Bordeaux,44.8378,-0.5792
+Bornu,11.8333,13.15
+Bouake,7.6906,-5.03
+Boure,11.75,-11.6667
+Brass,4.3167,6.2333
+Brazil,7.9667,-11.74
+Bristol,51.4545,-2.5879
+Britain,55.3781,-3.436
+British Guiana,6.8013,-58.1553
+Broad Street,6.4528,3.3868
+Brussels,50.8503,4.3517
+Buchanan,5.88,-10.05
+Bujumbura,-3.3822,29.3644
+Bunu,7.8,4.6
+Cairo,30.0444,31.2357
+Calabar,4.9761,8.3283
+Calcutta,22.5726,88.3639
+Cameroon,7.3697,12.3547
+Cape Coast,5.1053,-1.2466
+Cape Town,-33.9249,18.4241
+Caribbean,20,-75
+Carter Bridge,6.4589,3.3863
+Casablanca,33.5731,-7.5898
+Central Africa,0,18
+Chad,15.4542,18.7322
+Chad Basin,13,14
+Chicago,41.8781,-87.6298
+Coast,6,2.5
+Congo,-4.0383,21.7587
+Congo Free State,-4.0383,21.7587
+Cotonou,6.3654,2.4183
+Creek,4.7667,6.7667
+Cross River,4.9761,8.3283
+Dahomey,9.3077,2.3158
+Dakar,14.7167,-17.4677
+Daloa,6.89,-6.45
+Dar es Salaam,-6.7924,39.2083
+Degema,4.7667,6.7667
+Delhi,28.7041,77.1025
+Delta,5.35,6.25
+Djibouti,11.8251,42.5903
+Djougou,9.7,1.6667
+Durban,-29.8587,31.0218
+Dutse,11.8,9.35
+East Africa,5,35
+East Coast,-5,39
+Ebute Metta,6.4889,3.3825
+Edinburgh,55.9533,-3.1883
+Egba,7.1581,3.3463
+Egbaland,7.1581,3.3463
+Egypt,26.8206,30.8025
+Ejinrin,6.71,3.98
+Ekiti,7.719,5.311
+Eko,6.4542,3.3841
+Elmina,5.0842,-1.3508
+England,52.3555,-1.1743
+Enugu,6.4667,7.5667
+Enuowa,6.4536,3.3858
+Epe,6.5844,3.9798
+Ethiopia,9.145,40.4897
+Europe,54.526,15.2551
+Ewe,6.6,0.47
+Forcados,5.35,5.4333
+France,46.2276,2.2137
+Free State,7.9667,-11.74
+Freetown,8.4657,-13.2317
+French West Africa,12,0
+Fulani,12,8
+Ga,5.6037,-0.187
+Gaborone,-24.6282,25.9231
+Gagnoa,6.1333,-5.95
+Gambia,13.4432,-15.3101
+Gao,16.2717,-0.0519
+Germany,51.1657,10.4515
+Ghana,7.9465,-1.0232
+Glasgow,55.8642,-4.2518
+Gold Coast,5.55,-0.2
+Government House,6.4558,3.406
+Grain Coast,6.3078,-10.8047
+Grand Bassam,5.2128,-3.7444
+Grand Popo,6.2833,1.8167
+Greenville,5.0111,-9.04
+Great Britain,55.3781,-3.436
+Guinea,9.9456,-9.6966
+Guinea Bissau,11.8037,-15.1804
+Guinea Savannah,8,5
+Gulf of Guinea,1,4
+Gusau,12.1667,6.6667
+Haiti,7.9667,-11.74
+Harper,4.38,-7.72
+Hausa,12,8.5
+Hausaland,12,8.5
+Havana,23.1136,-82.3666
+Hinterland,8,5
+Ho,6.6,0.47
+Hong Kong,22.3193,114.1694
+Ibadan,7.3775,3.947
+Ibibio,5,7.8333
+Ibo,5.75,7.5
+Idah,7.1,6.7333
+Iddo,6.4703,3.3839
+Ife,7.4806,4.5591
+Igbo,5.75,7.5
+Igboland,5.75,7.5
+Ijebu,6.8202,3.917
+Ijebu Igbo,6.9761,3.9986
+Ijebu-Ode,6.8202,3.917
+Ijora,6.4639,3.3667
+Ikeja,6.6018,3.3515
+Ikorodu,6.6194,3.5105
+Ikoyi,6.4559,3.4347
+Ilesha,7.6167,4.7333
+Ilorin,8.5,4.55
+India,20.5937,78.9629
+Italy,41.8719,12.5674
+Itsekiri,5.5167,5.75
+Ivory Coast,7.54,-5.5471
+Jamaica,18.1096,-77.2975
+Jebba,9.0833,4.8167
+Johannesburg,-26.2041,28.0473
+Jos,9.8965,8.8583
+Kaduna,10.5167,7.4333
+Kakawa,6.4517,3.3858
+Kampala,0.3476,32.5825
+Kankan,10.3833,-9.3
+Kano,12.0022,8.592
+Kara,9.55,1.1833
+Katsina,12.9908,7.6018
+Keffi,8.847,7.8757
+Kenema,7.8667,-11.1833
+Kenya,-0.0236,37.9062
+Keta,5.9179,0.987
+Khartoum,15.5007,32.5599
+Kigali,-1.9706,30.1044
+Kilwa,-8.9,39.5077
+Kindia,10.05,-12.8667
+Kingston,18.0179,-76.8096
+Kinshasa,-4.4419,15.2663
+Koforidua,6.0945,-0.2598
+Konakry,9.6412,-13.5784
+Korhogo,9.4578,-5.6294
+Kru,5,-9
+Kru Coast,5,-9
+Kru-town,6.4514,3.3792
+Kumasi,6.6885,-1.6244
+Labe,11.32,-12.2833
+Lagos,6.5244,3.3792
+Lagos Colony,6.5244,3.3792
+Lagos Lagoon,6.511,3.4
+Lagos mainland,6.55,3.35
+Land,9.082,8.6753
+Lekki,6.4698,3.5852
+Liberia,6.4281,-9.4295
+Libreville,0.4162,9.4673
+Lilongwe,-13.9626,33.7741
+Liverpool,53.4084,-2.9916
+Lokoja,7.8,6.7333
+Lome,6.1319,1.2228
+London,51.5074,-0.1278
+Lower Guinea,6,4
+Luanda,-8.8368,13.2343
+Lusaka,-15.3875,28.3228
+Madagascar,-18.7669,46.8691
+Madeira,32.7607,-16.9596
+Madrid,40.4168,-3.7038
+Mafoluku,6.5589,3.3376
+Makeni,8.8833,-12.05
+Makurdi,7.7333,8.5333
+Malabo,3.7523,8.7742
+Malawi,-13.2543,34.3015
+Mali,17.5707,-3.9962
+Manchester,53.4808,-2.2426
+Mandinka,13.4527,-16.5775
+Maputo,-25.9655,32.5832
+Maradi,13.5,7.1
+Marina,6.4542,3.3841
+Marseilles,43.2965,5.3698
+Maseru,-29.3142,27.4833
+Mbabane,-26.3054,31.1367
+Mediterranean,35,18
+Melbourne,-37.8136,144.9631
+Mende,7.9667,-11.74
+Mindello,16.8833,-24.9833
+Minna,9.6139,6.5569
+Mogadishu,2.0469,45.3182
+Montreal,45.5017,-73.5673
+Mopti,14.4833,-4.1833
+Morocco,31.7917,-7.0926
+Mossi,12.3714,-1.5197
+Mozambique,-18.6657,35.5296
+Mubi,10.2686,13.2701
+Mumbai,19.076,72.8777
+Mushin,6.5322,3.3536
+Nairobi,-1.2921,36.8219
+Natal,-29,30.5
+National African Company,9,7
+Natitingou,10.3042,1.38
+Netherlands,52.1326,5.2913
+New Orleans,29.9511,-90.0715
+New York,40.7128,-74.006
+Niamey,13.5116,2.1254
+Niger,17.6078,8.0817
+Niger Coast,5,7
+Niger Delta,5.35,6.25
+Niger River,11,9
+Nigeria,9.082,8.6753
+Nnewi,6.0197,6.9186
+North Africa,28,13
+North America,54.526,-105.2551
+Northern Nigeria,10,8
+Northern Rhodesia,-15,25
+Nubia,21,31
+Nyasaland,-13.2543,34.3015
+Obalende,6.4472,3.4139
+Obuasi,6.2049,-1.6705
+Ondo,7.1,4.8333
+Ogbomoso,8.1333,4.2567
+Okrika,4.7333,7.0833
+Olowogbowo,6.4511,3.3836
+Onitsha,6.1667,6.7833
+Opobo,4.5167,7.55
+Oshogbo,7.7667,4.5667
+Oshodi,6.5547,3.3492
+Ouagadougou,12.3714,-1.5197
+Ouidah,6.367,2.093
+Owerri,5.4833,7.0333
+Oyo,7.843,3.9368
+Oyo Empire,7.843,3.9368
+Paris,48.8566,2.3522
+Pepper Coast,6.4281,-9.4295
+Port au Prince,18.5944,-72.3074
+Port Harcourt,4.8156,7.0498
+Port Louis,-20.1609,57.5012
+Porto Novo,6.4969,2.6283
+Portugal,39.3999,-8.2245
+Praia,14.9315,-23.5125
+Pretoria,-25.7461,28.1881
+Race Course,6.4544,3.4019
+Rabat,34.0209,-6.8313
+Rainforest,6,7
+Rhodesia,-19.0154,29.1549
+Rio de Janeiro,-22.9068,-43.1729
+River Niger,11,9
+Rome,41.9028,12.4964
+Rotterdam,51.9244,4.4777
+Royal Niger Company,9,7
+Sahara,25,12
+Sahel,15,10
+St Louis,16.0167,-16.5
+Saltpond,5.2092,-1.0603
+San Pedro,4.75,-6.64
+Sao Tome,0.3301,6.7332
+Sapele,5.8949,5.6701
+Savannah,10,8
+Sekondi,4.9347,-1.7361
+Senegal,14.4974,-14.4524
+Senegambia,13.5,-15
+Serrekunda,13.4386,-16.6775
+Shagamu,6.85,3.65
+Sierra Leone,8.4606,-11.7799
+Sikasso,11.32,-5.6667
+Singapore,1.3521,103.8198
+Slave Coast,6.37,2.39
+Sokode,8.9833,1.1333
+Sokoto,13.0622,5.2339
+Sokoto Caliphate,13.0622,5.2339
+Songhai,16.7735,-3.0074
+South Africa,-30.5595,22.9375
+South America,-8.7832,-55.4915
+Southern Nigeria,6.5,7
+Southern Rhodesia,-19.0154,29.1549
+Spain,40.4637,-3.7492
+Sudan,12.8628,30.2176
+Surulere,6.5059,3.352
+Sydney,-33.8688,151.2093
+Tafawa Balewa Sq,6.4544,3.4019
+Takoradi,4.9347,-1.7361
+Tamale,9.4075,-0.8533
+Tanzania,-6.369,34.8888
+Tema,5.6698,-0.0167
+Temne,8.8833,-12.05
+Thies,14.7833,-16.9167
+Timbuktu,16.7735,-3.0074
+Tinubu Square,6.4544,3.3839
+Tiv,7.35,9
+Togo,8.6195,0.8248
+Tokyo,35.6762,139.6503
+Toronto,43.6532,-79.3832
+Touba,14.85,-15.8833
+Transvaal,-25.7461,28.2314
+Tripoli,32.8872,13.1913
+Tunis,36.8065,10.1815
+Tunisia,33.8869,9.5375
+Uganda,1.3733,32.2903
+Umunede,6.276,6.303
+United African Company,9,7
+United Kingdom,55.3781,-3.436
+United States,39.8283,-98.5795
+Upper Guinea,10,-10
+Uyo,5.05,7.9333
+Victoria Island,6.4281,3.4219
+Volta,6.3167,0.5
+Volta River,6.3167,0.5
+Wa,10.06,-2.5
+Warri,5.5167,5.75
+Washington,38.9072,-77.0369
 West Africa,11,4
+West Coast,6,2.5
+West Coast of Africa,6,2.5
+West Indies,19,-70
+Western Sudan,12,8
+Whydah,6.367,2.093
+Windhoek,-22.5609,17.0658
+Windward Coast,6.5,-11.5
+Wolof,14.7167,-17.4677
+World,0,0
+Yaba,6.5163,3.3838
+Yamoussoukro,6.8276,-5.2893
+Yaounde,3.848,11.5021
+Yola,9.2087,12.4819
+Yoruba,7.5,4.5
+Yorubaland,7.5,4.5
+Zaire,-4.0383,21.7587
+Zambia,-13.1339,27.8493
+Zanzibar,-6.1659,39.2026
+Zinder,13.8083,8.9881
+Zungeru,9.8128,6.1545
+Iyere,7.6167,4.7333
+Aguja,7.6167,4.7333
+Abere,7.6167,4.7333
+Moloja,7.6167,4.7333
+Obalifubu,7.6167,4.7333
+Kuba,7.6167,4.7333
+Agbe-Ajido,7.6167,4.7333
+Oke Oshun,7.6167,4.7333
+Oshu Ode,7.6167,4.7333
+Oyisado,7.6167,4.7333
