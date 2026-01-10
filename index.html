@@ -927,6 +927,21 @@
             </div>
         </div>
 
+        <div style="margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 8px; text-align: center;">
+            <div style="font-size: 14px; color: #555; margin-bottom: 10px;" data-i18n="sampleFilesHeader">
+                Need sample files to test the application?
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                <a href="sample_analysis.csv" download style="color: #3388ff; text-decoration: none; font-weight: bold;">
+                    📄 <span data-i18n="downloadAnalysisSample">Sample Analysis CSV</span>
+                </a>
+                <span style="color: #ccc;">|</span>
+                <a href="sample_locations.csv" download style="color: #3388ff; text-decoration: none; font-weight: bold;">
+                    📍 <span data-i18n="downloadLocationSample">Sample Location CSV</span>
+                </a>
+            </div>
+        </div>
+
         <div id="upload-status" style="font-size: 14px; color: #666; margin-top: 15px;"></div>
         <div id="start-analysis-container" style="margin-top: 20px; display: none;">
             <button class="file-upload-button" onclick="startAnalysis()" data-i18n="startAnalysis">
@@ -1113,7 +1128,10 @@
                 mostRelevantQuotes: 'Most Relevant Quotes about "{keyword}"',
                 clickToEnlarge: "Click on chart to view enlarged version",
                 totalMentions: "Total {total} mentions from {start} to {end} (Max: {max})",
-                withVariations: "(+ variations)"
+                withVariations: "(+ variations)",
+                sampleFilesHeader: "Need sample files to test the application?",
+                downloadAnalysisSample: "Sample Analysis CSV",
+                downloadLocationSample: "Sample Location CSV"
             },
             ja: {
                 title: "ラゴス・ウィークリー・レコード キーワード分析 (1891-1921)",
@@ -1161,7 +1179,10 @@
                 mostRelevantQuotes: '"{keyword}" に関する関連引用',
                 clickToEnlarge: "グラフをクリックして拡大表示",
                 totalMentions: "合計{total}回の言及 ({start}年から{end}年、最大: {max}回)",
-                withVariations: "（複数形含む）"
+                withVariations: "（複数形含む）",
+                sampleFilesHeader: "アプリケーションをテストするためのサンプルファイルが必要ですか？",
+                downloadAnalysisSample: "サンプル分析用CSV",
+                downloadLocationSample: "サンプル地名CSV"
             }
         };
 
