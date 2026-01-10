@@ -7,6 +7,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.3.0] - 2025-01-10
+
+### Added
+- **Sample Data Files**
+  - `sample_analysis.csv` - 20 fictional article entries (1893-1921) with "Sample" prefix
+  - `sample_locations.csv` - 371 place names with coordinates
+  - Sample file download links in index.html for easy access
+  - Links to sample files in all README files (README.md, README.en.md, README.ja.md)
+
+- **Documentation Improvements**
+  - Added web application URL to all README files
+  - Sample files section in README with clear indication of fictional data
+
+### Changed
+- **README Corrections**
+  - Fixed Japanese description from "対話型可視化ツール" (interactive/conversational tool) to "可視化・分析ツール" (visualization and analysis tool)
+  - Application is not chat-based, so the term "対話型" was misleading
+
+- **User Experience Improvements**
+  - All links (web app, sample files) now open in new tab with `target="_blank"`
+  - Improved accessibility and navigation flow
+
+### Fixed
+- **Quote Display Bold Rendering**
+  - Fixed double-escaping issue preventing `<strong>` tags from rendering as bold
+  - Removed redundant `sanitizeQuoteHTML()` call in quote display
+  - Quotes already safely escaped by `highlightTermsSafe()` function
+  - XSS security maintained while allowing proper bold text rendering
+
+### Security
+- **Verified Security Integrity**
+  - Confirmed Content Security Policy (CSP) remains in place
+  - All security functions intact (`escapeHTML()`, `highlightTermsSafe()`)
+  - All previous security commits preserved
+  - No regression in XSS protection
+
+---
+
 ## [1.2.0] - 2025-11-17
 
 ### Changed - Major Refactoring for Security and Maintainability
