@@ -1,22 +1,31 @@
 placename,latitude,longitude
 Aba,5.117,7.3667
 Abeokuta,7.1475,3.3619
+Abyssinia,9.145,40.4897
 Accra,5.6037,-0.187
 Adamawa,10.06,-2.5
+Africa,8.7832,34.5085
 Agbor,6.2559,6.1921
 Agege,6.6177,3.3244
 Akassa,4.3167,6.0667
 Akure,7.25,5.195
+Albany,4.3167,6.2333
 Alexandria,31.2001,29.9187
 Algiers,36.7538,3.0588
+America,39.8283,-98.5795
 Anambra,6.3167,8.1167
 Anomabu,5.1825,-1.1167
+Antananarivo,-18.7669,46.8691
 Apapa,6.4489,3.3589
+Aro,5.3833,7.9167
 Arochukwu,5.3833,7.9167
 Asaba,6.2,6.7333
 Ashanti,6.7,-1.6333
+Asia,34.0479,100.6197
 Asmara,15.3229,38.9251
 Atijere,6.6147,4.4183
+Atlantic,0,0
+Australia,-25.2744,133.7751
 Axim,4.8676,-2.2417
 Badagry,6.4148,2.8876
 Bamako,12.6392,-8.0029
@@ -29,6 +38,7 @@ Belgium,50.5039,4.4699
 Benin,6.35,5.6
 Benin City,6.335,5.6037
 Berlin,52.52,13.405
+Biafra,4,8
 Bida,9.0833,6.0167
 Bight of Benin,6.3333,2.7
 Bight of Biafra,4,8
@@ -40,7 +50,9 @@ Bordeaux,44.8378,-0.5792
 Bornu,11.8333,13.15
 Bouake,7.6906,-5.03
 Brass,4.3167,6.2333
+Brazil,-14.2350,-51.9253
 Bristol,51.4545,-2.5879
+Britain,55.3781,-3.436
 British Guiana,6.8013,-58.1553
 Broad Street,6.4528,3.3868
 Brussels,50.8503,4.3517
@@ -60,14 +72,19 @@ Central Africa,0,18
 Chad,15.4542,18.7322
 Chad Basin,13,14
 Chicago,41.8781,-87.6298
+Coast,6,2.5
 Congo,-4.0383,21.7587
+Congo Free State,-4.0383,21.7587
 Cotonou,6.3654,2.4183
+Creek,4.7667,6.7667
+Cross River,4.9761,8.3283
 Dahomey,9.3077,2.3158
 Dakar,14.7167,-17.4677
 Daloa,6.89,-6.45
 Dar es Salaam,-6.7924,39.2083
 Degema,4.7667,6.7667
 Delhi,28.7041,77.1025
+Delta,5.35,6.25
 Djibouti,11.8251,42.5903
 Djougou,9.7,1.6667
 Durban,-29.8587,31.0218
@@ -76,20 +93,26 @@ East Africa,5,35
 East Coast,-5,39
 Ebute Metta,6.4889,3.3825
 Edinburgh,55.9533,-3.1883
+Egba,7.1581,3.3463
 Egbaland,7.1581,3.3463
 Egypt,26.8206,30.8025
 Ejinrin,6.71,3.98
 Ekiti,7.719,5.311
+Eko,6.4542,3.3841
 Elmina,5.0842,-1.3508
 England,52.3555,-1.1743
 Enugu,6.4667,7.5667
+Enuowa,6.4536,3.3858
 Epe,6.5844,3.9798
 Ethiopia,9.145,40.4897
+Europe,54.526,15.2551
+Ewe,6.6,0.47
 Forcados,5.35,5.4333
 France,46.2276,2.2137
 Freetown,8.4657,-13.2317
 French West Africa,12,0
 Fulani,12,8
+Ga,5.6037,-0.187
 Gaborone,-24.6282,25.9231
 Gagnoa,6.1333,-5.95
 Gambia,13.4432,-15.3101
@@ -102,24 +125,30 @@ Government House,6.4558,3.406
 Grain Coast,6.3078,-10.8047
 Grand Bassam,5.2128,-3.7444
 Grand Popo,6.2833,1.8167
-Greenville,5.0111,-9.04
 Great Britain,55.3781,-3.436
+Greenville,5.0111,-9.04
 Guinea,9.9456,-9.6966
 Guinea Bissau,11.8037,-15.1804
 Guinea Savannah,8,5
 Gulf of Guinea,1,4
 Gusau,12.1667,6.6667
+Haiti,18.9712,-72.2852
 Harper,4.38,-7.72
+Hausa,12,8.5
 Hausaland,12,8.5
 Havana,23.1136,-82.3666
+Hinterland,8,5
 Ho,6.6,0.47
 Hong Kong,22.3193,114.1694
 Ibadan,7.3775,3.947
 Ibibio,5,7.8333
+Ibo,5.75,7.5
 Idah,7.1,6.7333
 Iddo,6.4703,3.3839
 Ife,7.4806,4.5591
+Igbo,5.75,7.5
 Igboland,5.75,7.5
+Ijebu,6.8202,3.917
 Ijebu Igbo,6.9761,3.9986
 Ijebu-Ode,6.8202,3.917
 Ijora,6.4639,3.3667
@@ -156,12 +185,16 @@ Kinshasa,-4.4419,15.2663
 Koforidua,6.0945,-0.2598
 Konakry,9.6412,-13.5784
 Korhogo,9.4578,-5.6294
+Kru,5,-9
 Kru Coast,5,-9
+Kru-town,6.4514,3.3792
 Kumasi,6.6885,-1.6244
 Labe,11.32,-12.2833
 Lagos,6.5244,3.3792
+Lagos Colony,6.5244,3.3792
 Lagos Lagoon,6.511,3.4
 Lagos mainland,6.55,3.35
+Land,9.082,8.6753
 Lekki,6.4698,3.5852
 Liberia,6.4281,-9.4295
 Libreville,0.4162,9.4673
@@ -183,6 +216,7 @@ Malabo,3.7523,8.7742
 Malawi,-13.2543,34.3015
 Mali,17.5707,-3.9962
 Manchester,53.4808,-2.2426
+Mandinka,13.4527,-16.5775
 Maputo,-25.9655,32.5832
 Maradi,13.5,7.1
 Marina,6.4542,3.3841
@@ -197,6 +231,7 @@ Mogadishu,2.0469,45.3182
 Montreal,45.5017,-73.5673
 Mopti,14.4833,-4.1833
 Morocco,31.7917,-7.0926
+Mossi,12.3714,-1.5197
 Mozambique,-18.6657,35.5296
 Mubi,10.2686,13.2701
 Mumbai,19.076,72.8777
@@ -220,30 +255,33 @@ North America,54.526,-105.2551
 Northern Nigeria,10,8
 Northern Rhodesia,-15,25
 Nubia,21,31
+Nyasaland,-13.2543,34.3015
 Obalende,6.4472,3.4139
 Obuasi,6.2049,-1.6705
-Ondo,7.1,4.8333
 Ogbomoso,8.1333,4.2567
 Okrika,4.7333,7.0833
 Olowogbowo,6.4511,3.3836
+Ondo,7.1,4.8333
 Onitsha,6.1667,6.7833
 Opobo,4.5167,7.55
-Oshogbo,7.7667,4.5667
 Oshodi,6.5547,3.3492
+Oshogbo,7.7667,4.5667
 Ouagadougou,12.3714,-1.5197
 Ouidah,6.367,2.093
 Owerri,5.4833,7.0333
 Oyo,7.843,3.9368
+Oyo Empire,7.843,3.9368
 Paris,48.8566,2.3522
-Port au Prince,18.5944,-72.3074
+Pepper Coast,6.4281,-9.4295
 Port Harcourt,4.8156,7.0498
 Port Louis,-20.1609,57.5012
+Port au Prince,18.5944,-72.3074
 Porto Novo,6.4969,2.6283
 Portugal,39.3999,-8.2245
 Praia,14.9315,-23.5125
 Pretoria,-25.7461,28.1881
-Race Course,6.4544,3.4019
 Rabat,34.0209,-6.8313
+Race Course,6.4544,3.4019
 Rainforest,6,7
 Rhodesia,-19.0154,29.1549
 Rio de Janeiro,-22.9068,-43.1729
@@ -253,7 +291,6 @@ Rotterdam,51.9244,4.4777
 Royal Niger Company,9,7
 Sahara,25,12
 Sahel,15,10
-St Louis,16.0167,-16.5
 Saltpond,5.2092,-1.0603
 San Pedro,4.75,-6.64
 Sao Tome,0.3301,6.7332
@@ -277,6 +314,7 @@ South America,-8.7832,-55.4915
 Southern Nigeria,6.5,7
 Southern Rhodesia,-19.0154,29.1549
 Spain,40.4637,-3.7492
+St Louis,16.0167,-16.5
 Sudan,12.8628,30.2176
 Surulere,6.5059,3.352
 Sydney,-33.8688,151.2093
@@ -285,6 +323,7 @@ Takoradi,4.9347,-1.7361
 Tamale,9.4075,-0.8533
 Tanzania,-6.369,34.8888
 Tema,5.6698,-0.0167
+Temne,8.8833,-12.05
 Thies,14.7833,-16.9167
 Timbuktu,16.7735,-3.0074
 Tinubu Square,6.4544,3.3839
@@ -319,12 +358,14 @@ Whydah,6.367,2.093
 Windhoek,-22.5609,17.0658
 Windward Coast,6.5,-11.5
 Wolof,14.7167,-17.4677
+World,0,0
 Yaba,6.5163,3.3838
 Yamoussoukro,6.8276,-5.2893
 Yaounde,3.848,11.5021
 Yola,9.2087,12.4819
 Yoruba,7.5,4.5
 Yorubaland,7.5,4.5
+Zaire,-4.0383,21.7587
 Zambia,-13.1339,27.8493
 Zanzibar,-6.1659,39.2026
 Zinder,13.8083,8.9881
