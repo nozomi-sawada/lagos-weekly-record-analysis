@@ -2186,9 +2186,9 @@
                             - Paragraph position
                         `;
 
-                        // XSS-safe: Sanitize but allow <strong> tags for highlighting
+                        // XSS-safe: Quote is already safely escaped by highlightTermsSafe() with only <strong> tags
                         const blockquote = document.createElement('blockquote');
-                        blockquote.innerHTML = sanitizeQuoteHTML(String(quote.quote ?? ""));
+                        blockquote.innerHTML = String(quote.quote ?? "");
                         quoteElement.appendChild(blockquote);
 
                         const quoteSource = document.createElement('div');
@@ -2828,9 +2828,9 @@
                         - Paragraph position
                     `;
 
-                    // XSS-safe: Sanitize but allow <strong> tags for highlighting
+                    // XSS-safe: Quote is already safely escaped by highlightTermsSafe() with only <strong> tags
                     const blockquote = document.createElement('blockquote');
-                    blockquote.innerHTML = sanitizeQuoteHTML(String(quote.quote ?? ""));
+                    blockquote.innerHTML = String(quote.quote ?? "");
                     quoteElement.appendChild(blockquote);
 
                     const quoteSource = document.createElement('div');
