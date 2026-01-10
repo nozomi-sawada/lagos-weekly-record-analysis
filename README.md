@@ -32,8 +32,8 @@ This is an interactive visualization tool for analyzing geographic mention patte
 **[Launch Web Application](https://nozomi-sawada.github.io/lagos-weekly-record-analysis/)**
 
 **Sample Files / サンプルファイル:**
-- [Sample Analysis CSV](sample_analysis.csv) - Example article data / サンプル記事データ
-- [Sample Location CSV](sample_locations.csv) - Example location coordinates / サンプル地名座標
+- <a href="sample_analysis.csv" target="_blank">Sample Analysis CSV</a> - Example article data / サンプル記事データ
+- <a href="sample_locations.csv" target="_blank">Sample Location CSV</a> - Example location coordinates / サンプル地名座標
 
 ---
 

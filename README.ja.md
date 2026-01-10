@@ -16,8 +16,8 @@
 **[ウェブアプリケーションを起動](https://nozomi-sawada.github.io/lagos-weekly-record-analysis/)**
 
 **サンプルファイル:**
-- [サンプル分析用CSV](sample_analysis.csv) - 架空のテキストを含むサンプル記事データ
-- [サンプル地名CSV](sample_locations.csv) - サンプル地名座標データ
+- <a href="sample_analysis.csv" target="_blank">サンプル分析用CSV</a> - 架空のテキストを含むサンプル記事データ
+- <a href="sample_locations.csv" target="_blank">サンプル地名CSV</a> - サンプル地名座標データ
 
 > **注意:** サンプルファイルはデモンストレーション目的のみの架空のデータです。必要なデータ形式の理解とアプリケーションの機能テストのために設計されています。
 

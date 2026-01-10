@@ -16,8 +16,8 @@ This application is an interactive visualization tool designed to analyze geogra
 **[Launch Web Application](https://nozomi-sawada.github.io/lagos-weekly-record-analysis/)**
 
 **Sample Files:**
-- [Sample Analysis CSV](sample_analysis.csv) - Example article data with fictional text
-- [Sample Location CSV](sample_locations.csv) - Example location coordinates
+- <a href="sample_analysis.csv" target="_blank">Sample Analysis CSV</a> - Example article data with fictional text
+- <a href="sample_locations.csv" target="_blank">Sample Location CSV</a> - Example location coordinates
 
 > **Note:** The sample files contain fictional data for demonstration purposes only. They are designed to help you understand the required data format and test the application's functionality.
 
