@@ -11,6 +11,15 @@ This application is an interactive visualization tool designed to analyze geogra
 - Time-series analysis and co-occurrence word analysis for keywords
 - Filtering by six period divisions (1891-1895, 1896-1900, 1901-1905, 1906-1910, 1911-1915, 1916-1921)
 
+## 🌐 Try the Application
+
+**<a href="https://nozomi-sawada.github.io/lagos-weekly-record-analysis/" target="_blank">Launch Web Application</a>**
+
+**Sample Files:**
+- <a href="sample_analysis.csv" target="_blank">Sample Analysis CSV</a> - Example article data with fictional text
+- <a href="sample_locations.csv" target="_blank">Sample Location CSV</a> - Example location coordinates
+
+> **Note:** The sample files contain fictional data for demonstration purposes only. They are designed to help you understand the required data format and test the application's functionality.
 
 ## Usage
 
