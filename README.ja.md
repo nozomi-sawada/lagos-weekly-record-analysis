@@ -131,11 +131,13 @@ Sawada, Nozomi. (2025). Lagos Weekly Record Analysis Tool.
 
 ## 謝辞
 - このアプリケーションで使用されたLagos Weekly Recordのデータは、ナイジェリアの植民地初期メディア研究の一環として収集されました。
-- 地図データおよびタイルは [OpenStreetMap](https://www.openstreetmap.org/) 提供のものを使用しています。
 
 ### オープンソースライブラリ
 このツールは以下のオープンソースライブラリを CDN 経由で利用しています：
 
 - [Leaflet](https://leafletjs.com/) 1.9.4（BSD-2-Clause ライセンス）
 - [PapaParse](https://www.papaparse.com/) 5.4.1（MIT ライセンス）
-- [OpenStreetMap](https://www.openstreetmap.org/) — 地図タイル © OpenStreetMap contributors
+
+### 地図データ
+- 地図データ © [OpenStreetMap](https://www.openstreetmap.org/) contributors、[Open Database License (ODbL)](https://opendatacommons.org/licenses/odbl/) の下で利用しています。
+- 地図タイル © OpenStreetMap contributors
