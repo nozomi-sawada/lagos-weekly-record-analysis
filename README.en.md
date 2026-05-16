@@ -132,3 +132,10 @@ Sawada, Nozomi. (2025). Lagos Weekly Record Analysis Tool.
 ## Acknowledgments
 - The Lagos Weekly Record data used in this application was collected as part of research on early colonial media in Nigeria.
 - Map data and tiles are provided by [OpenStreetMap](https://www.openstreetmap.org/).
+
+### Open-Source Libraries
+This tool uses the following open-source libraries via CDN:
+
+- [Leaflet](https://leafletjs.com/) 1.9.4 — BSD-2-Clause License
+- [PapaParse](https://www.papaparse.com/) 5.4.1 — MIT License
+- [OpenStreetMap](https://www.openstreetmap.org/) — Map tiles © OpenStreetMap contributors
