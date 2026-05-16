@@ -47,6 +47,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.2.0] - 2025-11-17
 
+> **Note:** The 3-file architecture introduced in this release was later
+> reverted to a single-file structure in commit `becfabf` ("Revert to
+> original single-file index.html (pre-3-file-split)"). The current
+> codebase uses a single `index.html` file; `style.css` and `analysis.js`
+> no longer exist. The CSP hardening, event handler modernization, and
+> performance improvements described below remain in effect.
+
 ### Changed - Major Refactoring for Security and Maintainability
 
 #### 3-File Architecture
