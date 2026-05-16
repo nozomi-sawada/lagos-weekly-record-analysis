@@ -7,6 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.4.0] - 2026-05-16
+
+### Changed
+
+- **License Update**
+  - Changed license from MIT to Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0)
+  - LICENSE file updated to reflect the new terms
+  - Copyright notice: "Copyright (c) 2025 Nozomi Sawada"
+
+- **Documentation Improvements**
+  - Reorganized acknowledgments section in README files (README.ja.md, README.en.md)
+  - Reframed acknowledgments as tool-development background (instead of inaccurate data-collection note)
+  - Added JSPS KAKENHI Grant Number JP19K13372 acknowledgment
+  - Separated open-source libraries and map data into distinct subsections
+  - Added explicit license information for external resources:
+    - Leaflet 1.9.4 (BSD-2-Clause License)
+    - PapaParse 5.4.1 (MIT License)
+    - OpenStreetMap data (Open Database License - ODbL)
+    - OpenStreetMap tiles (CC BY-SA 2.0)
+
+### Added
+
+- **Citation Support**
+  - Added `CITATION.cff` file for academic citation
+  - Enables GitHub's "Cite this repository" feature
+  - Provides standardized BibTeX and APA citation formats
+  - Includes ORCID identifier (0009-0006-9484-9225)
+  - Includes JSPS KAKENHI grant acknowledgment
+
+### Fixed
+
+- **CHANGELOG Date Correction**
+  - Corrected v1.3.0 release date from 2025-01-10 to 2026-01-10
+
+---
+
 ## [1.3.0] - 2026-01-10
 
 ### Added

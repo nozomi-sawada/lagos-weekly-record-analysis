@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - family-names: Sawada
+    given-names: Nozomi
+    affiliation: "Komazawa University"
+    orcid: "https://orcid.org/0009-0006-9484-9225"
+title: "Lagos Weekly Record Analysis Tool"
+version: 1.4.0
+date-released: 2026-05-16
+url: "https://github.com/nozomi-sawada/lagos-weekly-record-analysis"
+repository-code: "https://github.com/nozomi-sawada/lagos-weekly-record-analysis"
+abstract: "An interactive visualization and analysis tool for examining geographic mention patterns and keywords in the Lagos Weekly Record (1891-1921), a historical Nigerian newspaper published in colonial Lagos. Supports bilingual interface (English/Japanese). This work was supported by JSPS KAKENHI Grant Number JP19K13372."
+keywords:
+  - digital humanities
+  - African history
+  - Lagos
+  - Nigeria
+  - colonial history
+  - newspaper analysis
+  - geographic visualization
+  - text analysis
+license: CC-BY-NC-4.0
