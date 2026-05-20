@@ -63,8 +63,8 @@ Please prepare a CSV file containing the following columns:
 | Column Name | Description | Required |
 |------------|-------------|----------|
 | `text` | Article body text | Required |
-| `Year` or `year` | Publication year (numeric) | Required |
-| `Publication Date` or `Publication Date ` | Publication date | Optional |
+| `Year` / `year` | Publication year (numeric) | Required |
+| `Publication Date` / `Publication Date ` / `publication_date` / `publication date` / `Pub Date` / `pubdate` | Publication date (any of these aliases is accepted) | Optional |
 | `no` or `id` | Article ID | Optional |
 
 ### Location Data CSV File
@@ -73,10 +73,10 @@ Please prepare a CSV file containing the following columns:
 | Column Name | Description | Required |
 |------------|-------------|----------|
 | `placename` | Place name | Required |
-| `latitude` | Latitude (decimal format, e.g., 6.4550) | Required |
-| `longitude` | Longitude (decimal format, e.g., 3.3841) | Required |
+| `latitude` | Latitude (decimal format in the range **-90 to 90**, e.g., 6.4550) | Required |
+| `longitude` | Longitude (decimal format in the range **-180 to 180**, e.g., 3.3841) | Required |
 
-> **Note**: Column names are recognized case-insensitively, but using the exact names above is recommended.
+> **Note**: Column names are recognized case-insensitively, but using the exact names above is recommended. Rows with a missing place name or out-of-range coordinates are skipped, and the number of skipped rows is reported in the upload status message.
 
 ## Technical Details
 
