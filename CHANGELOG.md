@@ -7,6 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.4.1] - 2026-05-20
+
+### Fixed
+
+- **Silent data loss from inflexible CSV column name matching**
+  - `Publication Date` is now recognized through a normalized lookup that also accepts `publication_date`, `publication date`, `Pub Date`, and `pubdate`
+  - `Year` / `year` lookup unified through the same helper, replacing scattered `article.Year || article.year` fallbacks
+  - Existing `"Publication Date"` and `"Publication Date "` (trailing space) keys continue to work; ambiguous names such as `Date` are intentionally excluded to avoid mis-detection
+  - Resolves cases where quotes were displayed as "Unknown date" and articles were silently excluded from time-period filtering
+
+- **Invalid location coordinates silently accepted**
+  - Latitude is now validated against the -90 to 90 range, longitude against -180 to 180 (in addition to the existing `NaN` check)
+  - Number of skipped rows is surfaced to the user via the upload status message
+  - All-invalid uploads no longer wipe out the default `locationCoordinates`; instead an explanatory message is shown and the analysis cannot be started until a valid file is supplied
+
+- **Broken analysis CSV stranded the user in the visualization view**
+  - `startAnalysis()` now rolls back to the upload screen on FileReader error, PapaParse error, or empty parse result
+  - `analysisFileUploaded` is reset and the file reference is cleared so the user can re-select without reloading the page
+
+### Security
+
+- **Defense-in-depth escaping**
+  - `highlightTermsSafe()` re-escapes the regex match before HTML interpolation
+  - Theme card and related-term displays now apply `escapeHTML()` to user-derived strings before `innerHTML` assignment
+  - These code paths are not exploitable in the current single-user, fully client-side context (term tokens are restricted to `/\b[a-zA-Z]{3,}\b/`), but the escapes guard against future regressions if regex or data sources change
+
+### Added
+
+- **Test CSV fixtures (`test_csvs/`)**
+  - `test_locations_partial_invalid.csv`, `test_locations_all_invalid.csv`, `test_analysis_empty.csv`, `test_analysis_altcolumns.csv` with accompanying `README.md` describing the expected behavior for each scenario
+
+---
+
 ## [1.4.0] - 2026-05-16
 
 ### Changed
