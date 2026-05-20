@@ -1087,7 +1087,38 @@
             if (!terms || terms.length === 0) return escaped;
             const termsArray = Array.isArray(terms) ? terms : [terms];
             const pattern = termsArray.map(t => `\\b${escapeRegExp(t)}\\b`).join('|');
-            return escaped.replace(new RegExp(pattern, 'gi'), m => `<strong>${m}</strong>`); // Fixed: Avoid double-escaping
+            return escaped.replace(new RegExp(pattern, 'gi'), m => `<strong>${escapeHTML(m)}</strong>`);
+        }
+
+        // Look up a value from a CSV row by trying alternative column names.
+        // Existing keys are kept first so legacy CSVs behave identically.
+        function findColumnValue(row, candidates) {
+            if (!row) return "";
+            for (const name of candidates) {
+                const v = row[name];
+                if (v !== undefined && v !== null && v !== "") return v;
+            }
+            return "";
+        }
+
+        const PUBLICATION_DATE_COLUMNS = [
+            "Publication Date",
+            "Publication Date ",
+            "publication_date",
+            "publication date",
+            "Pub Date",
+            "pubdate"
+        ];
+        const YEAR_COLUMNS = ["Year", "year"];
+
+        function isValidLatitude(value) {
+            const n = Number(value);
+            return Number.isFinite(n) && n >= -90 && n <= 90;
+        }
+
+        function isValidLongitude(value) {
+            const n = Number(value);
+            return Number.isFinite(n) && n >= -180 && n <= 180;
         }
 
         // Language translations
@@ -1141,7 +1172,10 @@
                 withVariations: "(+ variations)",
                 sampleFilesHeader: "Need sample files to test the application?",
                 downloadAnalysisSample: "Sample Analysis CSV",
-                downloadLocationSample: "Sample Location CSV"
+                downloadLocationSample: "Sample Location CSV",
+                locationRowsSkipped: "{count} invalid location row(s) were skipped (missing name or out-of-range coordinates).",
+                noValidLocations: "No valid locations found in the uploaded file. Please check that 'placename', 'latitude' (-90 to 90), and 'longitude' (-180 to 180) are present.",
+                csvParseWarnings: "CSV parsed with {count} warning(s). Some rows may have been skipped."
             },
             ja: {
                 title: "ラゴス・ウィークリー・レコード キーワード分析 (1891-1921)",
@@ -1192,7 +1226,10 @@
                 withVariations: "（複数形含む）",
                 sampleFilesHeader: "アプリケーションをテストするためのサンプルファイルが必要ですか？",
                 downloadAnalysisSample: "サンプル分析用CSV",
-                downloadLocationSample: "サンプル地名CSV"
+                downloadLocationSample: "サンプル地名CSV",
+                locationRowsSkipped: "{count}件の無効な位置情報行をスキップしました（地名の欠落、または座標が範囲外）。",
+                noValidLocations: "アップロードされたファイルに有効な位置情報がありません。'placename'、'latitude'（-90〜90）、'longitude'（-180〜180）が含まれているか確認してください。",
+                csvParseWarnings: "CSVを{count}件の警告付きで解析しました。一部の行がスキップされた可能性があります。"
             }
         };
 
@@ -1448,12 +1485,27 @@
                     }
                     
                     // Process and store the location data
-                    customLocationData = processLocationData(results.data);
-                    
-                    // Update status
-                    const locationCount = Object.keys(customLocationData).length;
-                    document.getElementById('upload-status').textContent =
-                        translations[currentLanguage].locationFileLoaded + (analysisFileUploaded ? ` ${translations[currentLanguage].bothFilesReady}` : "");
+                    const { locations: parsedLocations, skipped } = processLocationData(results.data);
+                    const locationCount = Object.keys(parsedLocations).length;
+
+                    // Reject empty result so we don't wipe out the default locationCoordinates later.
+                    if (locationCount === 0) {
+                        customLocationData = null;
+                        locationFileUploaded = false;
+                        document.getElementById('upload-status').textContent =
+                            translations[currentLanguage].noValidLocations;
+                        updateStartButtonVisibility();
+                        return;
+                    }
+
+                    customLocationData = parsedLocations;
+
+                    let statusMsg = translations[currentLanguage].locationFileLoaded +
+                        (analysisFileUploaded ? ` ${translations[currentLanguage].bothFilesReady}` : "");
+                    if (skipped > 0) {
+                        statusMsg += " " + translations[currentLanguage].locationRowsSkipped.replace('{count}', skipped);
+                    }
+                    document.getElementById('upload-status').textContent = statusMsg;
 
                     locationFileUploaded = true;
                     updateStartButtonVisibility();
@@ -1467,10 +1519,12 @@
             console.log("[DEBUG] Papa.parse initiated");
         }
         
-        // Process location data from CSV to format needed by application
+        // Process location data from CSV to format needed by application.
+        // Returns { locations, skipped } so the caller can warn the user.
         function processLocationData(data) {
             const locations = {};
-            
+            let skipped = 0;
+
             data.forEach(row => {
                 // Get column names (accounting for case insensitivity)
                 const placenameKey = Object.keys(row).find(
@@ -1479,20 +1533,26 @@
                     key => key.toLowerCase() === 'latitude');
                 const lngKey = Object.keys(row).find(
                     key => key.toLowerCase() === 'longitude');
-                
-                if (placenameKey && latKey && lngKey) {
-                    const placename = row[placenameKey];
-                    const lat = parseFloat(row[latKey]);
-                    const lng = parseFloat(row[lngKey]);
-                    
-                    // Only add if we have valid coordinates
-                    if (placename && !isNaN(lat) && !isNaN(lng)) {
-                        locations[placename] = [lat, lng];
-                    }
+
+                if (!placenameKey || !latKey || !lngKey) {
+                    skipped++;
+                    return;
                 }
+
+                const placename = row[placenameKey];
+                const latRaw = row[latKey];
+                const lngRaw = row[lngKey];
+
+                // Reject missing names or coordinates outside valid Earth ranges.
+                if (!placename || !isValidLatitude(latRaw) || !isValidLongitude(lngRaw)) {
+                    skipped++;
+                    return;
+                }
+
+                locations[placename] = [Number(latRaw), Number(lngRaw)];
             });
-            
-            return locations;
+
+            return { locations, skipped };
         }
         
         // Modified version of existing handleFileUpload function
@@ -1553,9 +1613,22 @@
                 processCSVData(csvData);
             };
             reader.onerror = function() {
-                showError(translations[currentLanguage].errorReadingAnalysis);
+                handleAnalysisFailure(translations[currentLanguage].errorReadingAnalysis);
             };
             reader.readAsText(window.analysisFile);
+        }
+
+        // Roll back to the upload screen and clear the analysis-file flag
+        // so the user can re-select a file without reloading the page.
+        function handleAnalysisFailure(message) {
+            analysisFileUploaded = false;
+            document.getElementById('file-name').textContent = "";
+            window.analysisFile = null;
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('visualization-container').style.display = 'none';
+            document.getElementById('file-upload-container').style.display = 'block';
+            document.getElementById('upload-status').textContent = String(message ?? "");
+            updateStartButtonVisibility();
         }
         
         // Define periods for filtering
@@ -1603,6 +1676,18 @@
                     // Log the column names to debug
                     console.log("CSV Headers:", results.meta.fields);
 
+                    // Treat an empty parse as a failure so we don't drop the user into
+                    // a broken analysis view.
+                    if (!results.data || results.data.length === 0) {
+                        handleAnalysisFailure(translations[currentLanguage].failedParseCSV + " " +
+                            translations[currentLanguage].noValidLocations);
+                        return;
+                    }
+
+                    if (results.errors && results.errors.length > 0) {
+                        console.warn("[DEBUG] PapaParse warnings:", results.errors);
+                    }
+
                     // Store raw data
                     rawData = results.data;
                     
@@ -1635,7 +1720,7 @@
                 },
                 error: function(error) {
                     console.error("[DEBUG] Analysis CSV Papa.parse error:", error);
-                    showError(translations[currentLanguage].failedParseCSV + " " + error.message);
+                    handleAnalysisFailure(translations[currentLanguage].failedParseCSV + " " + error.message);
                 }
             });
 
@@ -1647,8 +1732,7 @@
             const yearSet = new Set();
             
             rawData.forEach(article => {
-                // Try to get year from different possible column names
-                const year = article.Year || article.year;
+                const year = findColumnValue(article, YEAR_COLUMNS);
                 if (year) {
                     yearSet.add(year);
                 }
@@ -1688,7 +1772,7 @@
             
             // Filter data to selected period
             const filteredData = rawData.filter(article => {
-                const year = article.Year || article.year;
+                const year = findColumnValue(article, YEAR_COLUMNS);
                 return year >= period.start && year <= period.end;
             });
             
@@ -1794,10 +1878,10 @@
                 const text = article.text || "";
 
                 // Handle publication date
-                let publicationDate = article["Publication Date"] || article["Publication Date "] || "";
+                let publicationDate = findColumnValue(article, PUBLICATION_DATE_COLUMNS);
 
                 // Get year
-                const year = article.Year || article.year;
+                const year = findColumnValue(article, YEAR_COLUMNS);
 
                 // Track locations found in this article to count unique articles
                 const locationsInThisArticle = new Set();
@@ -2380,7 +2464,7 @@
                 // Reprocess with current time filter
                 if (selectedPeriod) {
                     const filteredData = rawData.filter(article => {
-                        const year = article.Year || article.year;
+                        const year = findColumnValue(article, YEAR_COLUMNS);
                         return year >= selectedPeriod.start && year <= selectedPeriod.end;
                     });
                     filteredLocations = processText(filteredData);
@@ -2464,8 +2548,8 @@
             // Process all articles
             rawData.forEach(article => {
                 const text = article.text || "";
-                const publicationDate = article["Publication Date"] || article["Publication Date "] || "";
-                const year = article.Year || article.year;
+                const publicationDate = findColumnValue(article, PUBLICATION_DATE_COLUMNS);
+                const year = findColumnValue(article, YEAR_COLUMNS);
 
                 // Check for each keyword
                 for (const keyword of keywords) {
@@ -2693,7 +2777,7 @@
 
             rawData.forEach(article => {
                 const text = article.text || "";
-                const year = article.Year || article.year;
+                const year = findColumnValue(article, YEAR_COLUMNS);
 
                 if (!year) return;
 
@@ -2769,8 +2853,8 @@
                 const themeCard = document.createElement('div');
                 themeCard.className = 'theme-card';
                 themeCard.innerHTML = `
-                    <div class="theme-title">${theme.theme}</div>
-                    <div class="theme-words">${theme.terms.join(', ')}</div>
+                    <div class="theme-title">${escapeHTML(theme.theme)}</div>
+                    <div class="theme-words">${theme.terms.map(t => escapeHTML(t)).join(', ')}</div>
                 `;
                 themeContainer.appendChild(themeCard);
             });
@@ -2790,8 +2874,8 @@
                 const termTag = document.createElement('div');
                 termTag.className = 'term-tag';
                 termTag.innerHTML = `
-                    ${term.term}
-                    <span class="term-count">${term.count}</span>
+                    ${escapeHTML(term.term)}
+                    <span class="term-count">${escapeHTML(term.count)}</span>
                 `;
                 termsContainer.appendChild(termTag);
             });
