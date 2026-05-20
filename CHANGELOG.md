@@ -33,10 +33,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Theme card and related-term displays now apply `escapeHTML()` to user-derived strings before `innerHTML` assignment
   - These code paths are not exploitable in the current single-user, fully client-side context (term tokens are restricted to `/\b[a-zA-Z]{3,}\b/`), but the escapes guard against future regressions if regex or data sources change
 
-### Added
+### Verification
 
-- **Test CSV fixtures (`test_csvs/`)**
-  - `test_locations_partial_invalid.csv`, `test_locations_all_invalid.csv`, `test_analysis_empty.csv`, `test_analysis_altcolumns.csv` with accompanying `README.md` describing the expected behavior for each scenario
+- Changes were manually verified in the browser against the existing sample
+  CSV files and against purpose-built fixtures covering: partially invalid
+  location rows (skip + warning), all-invalid location rows (default
+  coordinates preserved, Start Analysis suppressed), header-only analysis
+  CSV (rollback to upload screen), and alternative column-name casing such
+  as lowercase `year` and `publication_date` (dates and years correctly
+  extracted). No regressions observed in the geographic map, quote display,
+  or period filter.
 
 ---
 
