@@ -1,0 +1,9 @@
+placename,latitude,longitude
+Lagos,6.5244,3.3792
+Ibadan,7.3775,3.947
+Abeokuta,7.1475,3.3619
+InvalidLat,999,3.0
+InvalidLng,5.0,-9999
+NoNameRow,5.0,3.0
+NotANumber,abc,xyz
+London,51.5074,-0.1278
