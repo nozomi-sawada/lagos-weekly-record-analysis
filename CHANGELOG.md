@@ -44,6 +44,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     they are mostly used as names of peoples/languages in the newspaper,
     and explains how to exclude them from geographic aggregation
 
+- **"Running Locally (Offline Use)" section** (README.md / README.ja.md / README.en.md)
+  - Step-by-step local usage: Download ZIP → extract → open `index.html`
+    (no installation required)
+  - Warns that `index.html` must stay in the same folder as `style.css`,
+    `app.js`, and `vendor/` — copying it alone no longer works after the
+    file split
+  - Includes a file-structure table describing the role of each file
+  - The `file://` double-click flow was verified end-to-end in headless
+    Chromium (upload → analysis → charts, no errors)
+
 ---
 
 ## [1.5.0] - 2026-07-08
