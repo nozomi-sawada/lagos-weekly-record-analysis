@@ -7,6 +7,94 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.6.0] - 2026-07-08
+
+### Changed
+
+- **Vendored libraries (offline support)**
+  - Leaflet 1.9.4 and PapaParse 5.4.1 are now bundled in `vendor/`
+    (copied from the official npm packages, licenses included) instead of
+    being loaded from cdnjs
+  - The app now works without internet access except for OpenStreetMap
+    tile loading; it also keeps working if the CDN is unreachable or blocked
+  - CSP tightened: `cdnjs.cloudflare.com` removed from `script-src` and
+    `style-src`
+
+- **Split single-file structure into `index.html` / `style.css` / `app.js`**
+  - Pure mechanical extraction of the inline `<style>` and `<script>`
+    blocks — no code was modified in the process
+  - A previous split (v1.2.0) was reverted because it broke functionality;
+    this time the split is verified by an automated end-to-end smoke test
+    (see below)
+
+### Added
+
+- **Automated smoke test** (`tests/smoke.js`, run with `npm test`)
+  - Drives the real app in headless Chromium via Playwright: uploads the
+    sample CSVs, starts the analysis, checks the geographic list, the
+    keyword timeline chart (bar count, no horizontal overflow, tick
+    labels), the enlarged chart modal (labels visible, Escape closes),
+    and the language switcher; fails on any JavaScript exception
+  - GitHub Actions workflow (`.github/workflows/smoke.yml`) runs it on
+    every push to main and on pull requests
+
+- **Methodological note on ethnonyms** (README.ja.md / README.en.md)
+  - Documents that terms like "Yoruba", "Egba", "Ijebu" in the sample
+    location data are counted as single coordinate points even though
+    they are mostly used as names of peoples/languages in the newspaper,
+    and explains how to exclude them from geographic aggregation
+
+- **"Running Locally (Offline Use)" section** (README.md / README.ja.md / README.en.md)
+  - Step-by-step local usage: Download ZIP → extract → open `index.html`
+    (no installation required)
+  - Warns that `index.html` must stay in the same folder as `style.css`,
+    `app.js`, and `vendor/` — copying it alone no longer works after the
+    file split
+  - Includes a file-structure table describing the role of each file
+  - The `file://` double-click flow was verified end-to-end in headless
+    Chromium (upload → analysis → charts, no errors)
+
+---
+
+## [1.5.0] - 2026-07-08
+
+### Fixed
+
+- **Keyword timeline bar chart was unreadable in the sidebar**
+  - Bars had a 15px minimum width, so ~30 years of data overflowed the 300–400px sidebar and bars were cut off
+  - Year and count labels were rendered on every bar and overlapped each other completely
+  - Bars now share the available width evenly, year labels are shown only at 5-year ticks (every year when the range is short), and exact per-year counts moved to a hover tooltip
+  - Years with no mentions are now filled with zero-height bars so the time axis is continuous (previously e.g. 1893 and 1900 sat side by side, distorting the timeline)
+
+- **Enlarged chart modal clipped instead of scrolling**
+  - The chart parent had `overflow: hidden`, so on narrower screens the right side of the chart was simply cut off with no way to scroll; horizontal scrolling now works and the chart centers itself when it fits
+  - Year labels used a broken `translateX(-50%) rotate(45deg)` combination (rotation applied around the wrong origin), making them collide with the bars; they are now horizontal and readable under each 30px bar
+  - Bar heights are now scaled to the actual rendered chart height instead of a hard-coded 350px, preventing overflow on short screens (`height: min(500px, 60vh)`)
+  - Zero-count years no longer print a "0" label above the baseline (values remain available via tooltip)
+
+- **Modal close button had no styling**
+  - The `×` button rendered as unstyled inline text; it is now positioned top-right with a hover state, and the modal can also be closed with the Escape key
+
+- **Map legend did not match the actual marker colors**
+  - `getMarkerColor()` uses six color buckets (300+, 150–300, 100–150, 50–100, 25–50, <25) but the legend showed only four with different boundaries (e.g. "#4292c6 = 50–150" while the code assigns #4292c6 to 100–150); the legend now lists all six buckets in both languages
+
+- **Minor correctness fixes**
+  - Keyword text is now HTML-escaped in the three section titles built with `innerHTML` (previously typing markup into the keyword box was rendered as HTML)
+  - The "Show Quotes" button reset in `showLocationDetails()` now respects the selected language instead of hardcoded English text
+  - `extractYears()` sorts years numerically instead of lexicographically
+  - Removed dead code: two `escapedLocationPatterns` blocks that were computed but never read (the one in `startAnalysis()` was additionally shadowed by `let`, so it could never have had an effect)
+
+### Verification
+
+- Verified end-to-end with a headless Chromium (Playwright) run against the
+  bundled sample CSVs: upload → Start Analysis → Keyword Analysis tab →
+  enlarged chart modal. Confirmed the sidebar chart no longer overflows
+  horizontally, 5-year tick labels render without collisions, the enlarged
+  chart scrolls at narrow viewport widths with year labels fully visible,
+  Escape closes the modal, and no new console errors appear.
+
+---
+
 ## [1.4.1] - 2026-05-20
 
 ### Fixed
@@ -124,10 +212,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 > **Note:** The 3-file architecture introduced in this release was later
 > reverted to a single-file structure in commit `becfabf` ("Revert to
-> original single-file index.html (pre-3-file-split)"). The current
-> codebase uses a single `index.html` file; `style.css` and `analysis.js`
-> no longer exist. The CSP hardening, event handler modernization, and
-> performance improvements described below remain in effect.
+> original single-file index.html (pre-3-file-split)") because it broke
+> functionality. In v1.6.0 the codebase was split again — this time as a
+> pure mechanical extraction verified by an automated smoke test — into
+> `index.html` / `style.css` / `app.js`. The CSP hardening, event handler
+> modernization, and performance improvements described below remain in
+> effect.
 
 ### Changed - Major Refactoring for Security and Maintainability
 

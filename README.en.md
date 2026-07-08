@@ -21,6 +21,29 @@ This application is an interactive visualization tool designed to analyze geogra
 
 > **Note:** The sample files contain fictional data for demonstration purposes only. They are designed to help you understand the required data format and test the application's functionality.
 
+## 💻 Running Locally (Offline Use)
+
+If you want to use the tool without an internet connection, or run it on your own PC, follow these steps. **No installation or additional software is required.**
+
+1. Click the green **"Code" button → "Download ZIP"** at the top of this page
+2. Extract the ZIP file
+3. **Double-click `index.html`** inside the extracted folder to open it in your browser
+
+> **Important:** `index.html` loads `style.css`, `app.js`, and `vendor/` from the same folder.
+> **Copying or emailing `index.html` alone will not work** — always keep the folder together.
+> When offline, only the map background tiles (OpenStreetMap) will be missing; all analysis features still work.
+
+### File Structure
+
+| File / Folder | Role |
+|---|---|
+| `index.html` | Page skeleton (open this one) |
+| `style.css` | Styling and layout |
+| `app.js` | The analysis, map, and chart logic |
+| `vendor/` | Bundled libraries: Leaflet (map) and PapaParse (CSV parsing) |
+| `sample_analysis.csv` / `sample_locations.csv` | Sample data for testing |
+| `tests/` | Automated tests for developers (not needed for use) |
+
 ## Usage
 
 ### 1. Data Upload
@@ -78,6 +101,15 @@ Please prepare a CSV file containing the following columns:
 
 > **Note**: Column names are recognized case-insensitively, but using the exact names above is recommended. Rows with a missing place name or out-of-range coordinates are skipped, and the number of skipped rows is reported in the upload status message.
 
+> **Methodological note (ethnonyms and group names)**: The sample location
+> data includes terms such as "Yoruba", "Egba", and "Ijebu" with coordinates,
+> even though in the newspaper these words are often used as names of peoples
+> or languages rather than places. The tool counts every term registered in
+> the location CSV as a single coordinate point, so ethnonym uses are also
+> mapped to one location. Please keep this in mind when interpreting results
+> and when building your own location CSV; to exclude such terms from the
+> geographic aggregation, simply omit them from your location CSV.
+
 ## Technical Details
 
 ### Libraries Used
@@ -134,7 +166,7 @@ Sawada, Nozomi. (2025). Lagos Weekly Record Analysis Tool.
 - This work was supported by JSPS KAKENHI Grant Number JP19K13372.
 
 ### Open-Source Libraries
-This tool uses the following open-source libraries via CDN:
+This tool uses the following open-source libraries (bundled in the `vendor/` directory, so the app works offline except for map tile loading):
 
 - [Leaflet](https://leafletjs.com/) 1.9.4 — BSD-2-Clause License
 - [PapaParse](https://www.papaparse.com/) 5.4.1 — MIT License

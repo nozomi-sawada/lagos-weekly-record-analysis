@@ -1,0 +1,12 @@
+{
+  "name": "lagos-weekly-record-analysis",
+  "version": "1.6.0",
+  "description": "Keyword and geographic analysis of Lagos Weekly Record editorials (1891-1921)",
+  "private": true,
+  "scripts": {
+    "test": "node tests/smoke.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}
