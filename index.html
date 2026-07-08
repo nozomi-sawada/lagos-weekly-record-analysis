@@ -690,56 +690,45 @@
         }
         
         .timeline-chart {
-            height: 150px;
+            height: 170px;
             margin-bottom: 15px;
             background-color: #f8f9fa;
             border: 1px solid #ddd;
             border-radius: 4px;
-            padding: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 12px 10px 26px 10px;
             position: relative;
         }
-        
+
         .bar-container {
             display: flex;
             align-items: flex-end;
-            height: 100px;
+            height: 100%;
             width: 100%;
-            padding: 0 10px;
+            border-bottom: 1px solid #ccc;
         }
-        
+
         .year-bar {
-            flex: 1;
+            flex: 1 1 0;
             background-color: #4292c6;
-            margin: 0 2px;
-            min-width: 15px;
+            margin: 0 1px;
+            min-width: 2px;
             position: relative;
             transition: height 0.3s;
+            border-radius: 2px 2px 0 0;
         }
-        
+
         .year-bar:hover {
             background-color: #2171b5;
         }
-        
+
         .year-label {
             position: absolute;
-            bottom: -20px;
+            bottom: -18px;
             left: 50%;
             transform: translateX(-50%);
             font-size: 10px;
             color: #555;
-        }
-        
-        .count-label {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 10px;
-            color: #1a73e8;
-            font-weight: bold;
+            white-space: nowrap;
         }
         
         /* Make layout responsive */
@@ -812,42 +801,29 @@
         }
 
         .enlarged-chart {
-            height: 500px;   /* より高く */
+            height: min(500px, 60vh);
             margin: 10px 0;
-            padding: 20px 5px; /* 左右のパディングを減らす */
+            padding: 10px;
             position: relative;
             background-color: #f8f9fa;
             border: 1px solid #ddd;
             border-radius: 4px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
+            /* 年数が多い場合は横スクロールで全体を見られるようにする */
+            overflow-x: auto;
+            overflow-y: hidden;
         }
 
         .enlarged-bar-container {
             display: flex;
             align-items: flex-end;
-            height: 400px;   /* より高く */
-            width: 100%;
+            height: calc(100% - 70px); /* 上下のラベル分の余白を確保 */
+            width: max-content;
             min-width: 100%;
-            padding: 0 5px;  /* パディングを減らす */
-            margin-top: 30px; /* 上部のラベル用に余白を追加 */
+            justify-content: center;
+            padding: 0 5px;
+            margin: 30px 0 40px 0; /* 上は件数ラベル、下は年ラベル用の余白 */
             position: relative;
-            flex: 1;
-            background-color: #f8f9fa;
-            overflow-x: auto;
-        }
-
-        /* チャートのベースライン */
-        .enlarged-bar-container::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background-color: #ddd;
-            z-index: 1;
+            border-bottom: 1px solid #ccc; /* チャートのベースライン */
         }
 
         .enlarged-year-bar {
@@ -859,6 +835,7 @@
             min-height: 1px;
             position: relative;
             transition: background-color 0.2s;
+            border-radius: 2px 2px 0 0;
         }
 
         .enlarged-year-bar:hover {
@@ -867,25 +844,39 @@
 
         .enlarged-year-label {
             position: absolute;
-            bottom: -25px;
+            bottom: -22px;
             left: 50%;
-            transform: translateX(-50%) rotate(45deg); /* 斜めに表示して重なりを防ぐ */
-            transform-origin: top left;
-            font-size: 11px;
+            transform: translateX(-50%);
+            font-size: 10px;
             color: #555;
-            font-weight: bold;
             white-space: nowrap;
         }
 
         .enlarged-count-label {
             position: absolute;
-            top: -25px;
+            top: -22px;
             left: 50%;
             transform: translateX(-50%);
             font-size: 12px;
             color: #1a73e8;
             font-weight: bold;
             white-space: nowrap;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 8px;
+            right: 16px;
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1;
+            color: #888;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .close-modal:hover {
+            color: #333;
         }
     </style>
 </head>
@@ -1033,11 +1024,19 @@
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background-color: #4292c6;"></div>
-                <span data-i18n="legendMedium">50-150 mentions</span>
+                <span data-i18n="legendMedium">100-150 mentions</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #6baed6;"></div>
+                <span data-i18n="legendMediumLow">50-100 mentions</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background-color: #9ecae1;"></div>
-                <span data-i18n="legendLow">&lt;50 mentions</span>
+                <span data-i18n="legendLow">25-50 mentions</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #c6dbef;"></div>
+                <span data-i18n="legendVeryLow">&lt;25 mentions</span>
             </div>
         </div>
 
@@ -1149,8 +1148,10 @@
                 mentionFrequency: "Mention Frequency",
                 legendHigh: "300+ mentions",
                 legendMediumHigh: "150-300 mentions",
-                legendMedium: "50-150 mentions",
-                legendLow: "<50 mentions",
+                legendMedium: "100-150 mentions",
+                legendMediumLow: "50-100 mentions",
+                legendLow: "25-50 mentions",
+                legendVeryLow: "<25 mentions",
                 processingData: "Processing Data...",
                 errorReadingLocation: "Error reading location file!",
                 errorLocationColumns: "Error: Location CSV must contain 'placename', 'latitude', and 'longitude' columns.",
@@ -1203,8 +1204,10 @@
                 mentionFrequency: "言及頻度",
                 legendHigh: "300回以上",
                 legendMediumHigh: "150-300回",
-                legendMedium: "50-150回",
-                legendLow: "50回未満",
+                legendMedium: "100-150回",
+                legendMediumLow: "50-100回",
+                legendLow: "25-50回",
+                legendVeryLow: "25回未満",
                 processingData: "データ処理中...",
                 errorReadingLocation: "位置情報ファイルの読み込みエラー！",
                 errorLocationColumns: "エラー: 位置情報CSVには 'placename'、'latitude'、'longitude' 列が必要です。",
@@ -1386,14 +1389,6 @@
 
         // List of words to search for in the text
         let locationKeywords = Object.keys(locationCoordinates);
-
-        // Pre-compile location patterns for performance
-        let escapedLocationPatterns = {};
-        if (locationKeywords && Array.isArray(locationKeywords)) {
-            locationKeywords.forEach(k => {
-                escapedLocationPatterns[k] = new RegExp('\\b' + escapeRegExp(k) + '\\b', 'gi');
-            });
-        }
 
         // Important contextual keywords that might indicate relevance
         const importantKeywords = [
@@ -1598,14 +1593,6 @@
             // Update the locationKeywords array from the new data
             locationKeywords = Object.keys(locationCoordinates);
 
-            // Pre-compile location patterns for performance
-            let escapedLocationPatterns = {};
-            if (locationKeywords && Array.isArray(locationKeywords)) {
-                locationKeywords.forEach(k => {
-                    escapedLocationPatterns[k] = new RegExp('\\b' + escapeRegExp(k) + '\\b', 'gi');
-                });
-            }
-
             // Process the analysis file
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -1738,7 +1725,7 @@
                 }
             });
             
-            availableYears = Array.from(yearSet).sort();
+            availableYears = Array.from(yearSet).sort((a, b) => a - b);
             console.log("Available years:", availableYears);
         }
         
@@ -2230,7 +2217,7 @@
             document.getElementById('details-articles').textContent = location.articleCount;
             
             // Reset quotes toggle button
-            document.getElementById('toggle-quotes-btn').textContent = 'Show Quotes';
+            document.getElementById('toggle-quotes-btn').textContent = translations[currentLanguage].showQuotes;
             document.getElementById('quote-section').style.display = 'none';
             
             // Show the details container
@@ -2806,12 +2793,36 @@
             });
             
             // Convert to array format
-            return Object.keys(yearlyMentions)
+            const sorted = Object.keys(yearlyMentions)
                 .map(year => ({
                     year: parseInt(year),
                     count: yearlyMentions[year]
                 }))
+                .filter(item => !isNaN(item.year))
                 .sort((a, b) => a.year - b.year);
+
+            return fillMissingYears(sorted);
+        }
+
+        // Fill years with no mentions with zero counts so the time axis is
+        // continuous (otherwise e.g. 1893 and 1900 would sit side by side).
+        function fillMissingYears(yearData) {
+            if (yearData.length === 0) return yearData;
+
+            const startYear = yearData[0].year;
+            const endYear = yearData[yearData.length - 1].year;
+
+            // Guard against corrupt year values producing a huge range
+            if (endYear - startYear > 200) return yearData;
+
+            const countsByYear = {};
+            yearData.forEach(item => { countsByYear[item.year] = item.count; });
+
+            const filled = [];
+            for (let y = startYear; y <= endYear; y++) {
+                filled.push({ year: y, count: countsByYear[y] || 0 });
+            }
+            return filled;
         }
         
         // Update the keyword analysis results display
@@ -2827,7 +2838,7 @@
             timelineSection.className = 'keyword-section';
             const t = translations[currentLanguage];
             timelineSection.innerHTML = `
-                <div class="keyword-section-title">${t.mentionsOverTime.replace('{keyword}', keyword)}</div>
+                <div class="keyword-section-title">${t.mentionsOverTime.replace('{keyword}', escapeHTML(keyword))}</div>
                 <div class="timeline-chart" id="timeline-chart"></div>
                 <div style="text-align: center; font-size: 12px; color: #555; margin-top: 5px;">
                     ${t.clickToEnlarge}
@@ -2842,7 +2853,7 @@
             const themesSection = document.createElement('div');
             themesSection.className = 'keyword-section';
             themesSection.innerHTML = `
-                <div class="keyword-section-title">${t.mainThemesAssociated.replace('{keyword}', keyword)}</div>
+                <div class="keyword-section-title">${t.mainThemesAssociated.replace('{keyword}', escapeHTML(keyword))}</div>
                 <div class="theme-container" id="theme-container"></div>
             `;
             resultsContainer.appendChild(themesSection);
@@ -2863,7 +2874,7 @@
             const termsSection = document.createElement('div');
             termsSection.className = 'keyword-section';
             termsSection.innerHTML = `
-                <div class="keyword-section-title">${t.termsFrequentlyAppearing.replace('{keyword}', keyword)}</div>
+                <div class="keyword-section-title">${t.termsFrequentlyAppearing.replace('{keyword}', escapeHTML(keyword))}</div>
                 <div class="related-terms" id="related-terms"></div>
             `;
             resultsContainer.appendChild(termsSection);
@@ -2951,32 +2962,34 @@
             }
             
             // Find maximum count for scaling
-            const maxCount = Math.max(...yearData.map(d => d.count));
-            
+            const maxCount = Math.max(1, ...yearData.map(d => d.count));
+
             // Create bar container
             const barContainer = document.createElement('div');
             barContainer.className = 'bar-container';
             container.appendChild(barContainer);
-            
+
+            // Label only every Nth year: the sidebar is narrow, so labelling
+            // every bar makes the years overlap and become unreadable.
+            const labelInterval = yearData.length > 12 ? 5 : 1;
+
             // Create bars for each year
             yearData.forEach(yearItem => {
                 const height = (yearItem.count / maxCount * 100);
-                
+
                 const bar = document.createElement('div');
                 bar.className = 'year-bar';
-                bar.style.height = `${height}%`;
-                
-                const yearLabel = document.createElement('div');
-                yearLabel.className = 'year-label';
-                yearLabel.textContent = yearItem.year;
-                
-                const countLabel = document.createElement('div');
-                countLabel.className = 'count-label';
-                countLabel.textContent = yearItem.count;
-                
-                bar.appendChild(yearLabel);
-                bar.appendChild(countLabel);
-                
+                bar.style.height = `${Math.max(height, 1)}%`;
+                // Exact value shown on hover instead of a label on every bar
+                bar.title = `${yearItem.year}: ${yearItem.count}`;
+
+                if (yearItem.year % labelInterval === 0) {
+                    const yearLabel = document.createElement('div');
+                    yearLabel.className = 'year-label';
+                    yearLabel.textContent = yearItem.year;
+                    bar.appendChild(yearLabel);
+                }
+
                 barContainer.appendChild(bar);
             });
             
@@ -3028,86 +3041,60 @@
                     return;
                 }
                 container.innerHTML = '';
-                
-                // Create bar container with fixed width based on number of years
+
+                // Sizing and centering/scrolling are handled by the
+                // .enlarged-bar-container CSS (width: max-content inside a
+                // horizontally scrollable .enlarged-chart).
                 const barContainer = document.createElement('div');
                 barContainer.className = 'enlarged-bar-container';
-                
-                // Important: Set width based on number of bars
-                // Each bar is 30px wide with 2px margin on each side
-                const containerWidth = yearData.length * 34; // 30px + 2px margin on each side
-
-                // If data points are few (chart is narrow), use auto width for centering
-                // Otherwise, set explicit width for scrolling
-                if (containerWidth < container.clientWidth) {
-                    barContainer.style.width = 'auto';
-                } else {
-                    barContainer.style.width = `${containerWidth}px`;
-                }
-                
                 container.appendChild(barContainer);
-                
-                // Scale factor to ensure we don't exceed the container height (with some padding)
-                // Reserve 50px at the top for labels
-                const maxHeight = 350; // Maximum height for bars in pixels
-                const scaleFactor = maxHeight / maxCount;
-                
+
+                // Show the modal first so the container has a measurable height
+                const modal = document.getElementById('chart-modal');
+                if (modal) {
+                    modal.style.display = 'block';
+                }
+
+                // Scale bars to the actual rendered height of the bar area
+                const maxHeight = Math.max(100, barContainer.clientHeight - 10);
+                const scaleFactor = maxHeight / Math.max(1, maxCount);
+
                 // Create bars for each year
                 yearData.forEach(yearItem => {
                     // Safety check for valid count
                     const count = yearItem.count || 0;
-                    
+
                     // Calculate pixel height (scaled to fit)
                     const heightPixels = Math.max(1, count * scaleFactor);
-                    
+
                     // Create bar element with fixed height in pixels
                     const bar = document.createElement('div');
                     bar.className = 'enlarged-year-bar';
                     bar.style.height = `${heightPixels}px`;
-                    
+                    bar.title = `${yearItem.year}: ${count}`;
+
                     // Year label below bar
                     const yearLabel = document.createElement('div');
                     yearLabel.className = 'enlarged-year-label';
                     yearLabel.textContent = yearItem.year;
-                    
-                    // Count label above bar
-                    const countLabel = document.createElement('div');
-                    countLabel.className = 'enlarged-count-label';
-                    countLabel.textContent = count;
-                    
-                    // Add labels to bar
+
                     bar.appendChild(yearLabel);
-                    bar.appendChild(countLabel);
-                    
+
+                    // Count label above bar (skip zero years to reduce noise;
+                    // the exact value is still available via the hover tooltip)
+                    if (count > 0) {
+                        const countLabel = document.createElement('div');
+                        countLabel.className = 'enlarged-count-label';
+                        countLabel.textContent = count;
+                        bar.appendChild(countLabel);
+                    }
+
                     // Add bar to container
                     barContainer.appendChild(bar);
                 });
-                
-                // Show the modal
-                const modal = document.getElementById('chart-modal');
-                if (modal) {
-                    modal.style.display = 'block';
 
-                    // 1. barContainer (子) の中身を中央揃え
-                    barContainer.style.display = 'flex';
-                    barContainer.style.justifyContent = 'center';
-
-                    // 2. container (親) で barContainer 自体を中央揃え
-                    const parentWidth = container.clientWidth;
-
-                    if (containerWidth < parentWidth) {
-                        // データが少ない時は、親(container)が子(barContainer)を中央揃え
-                        container.style.justifyContent = 'center';
-                    } else {
-                        // データが多い時は、スクロールのため左揃えに戻す
-                        container.style.justifyContent = 'flex-start';
-                    }
-
-                    // スクロールの位置を左端に設定
-                    setTimeout(() => {
-                        barContainer.scrollLeft = 0;
-                    }, 100);
-                }
+                // Start the horizontal scroll at the earliest year
+                container.scrollLeft = 0;
             } catch (error) {
                 console.error("Error in showEnlargedChart:", error);
             }
@@ -3128,6 +3115,13 @@
                 modal.style.display = 'none';
             }
         }
+
+        // Close modal with the Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
         
         // Initialize the file upload functionality
         document.addEventListener('DOMContentLoaded', () => {
