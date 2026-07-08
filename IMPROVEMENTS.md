@@ -109,3 +109,21 @@ mistakes earlier: check the .csv extension on selection, pre-read the analysis
 CSV header to confirm required columns (`text`, `Year`) before enabling Start
 Analysis. Note: MIME-type checks are unreliable for CSV (often
 `application/vnd.ms-excel`) and are not recommended.
+
+## 7. CSP の厳格化(インラインイベントハンドラの移行)/ CSP hardening
+
+- 現在、HTML の `onclick` 属性(11箇所)を使っているため、CSP に
+  `'unsafe-inline'` を残しています。これらを `addEventListener` 方式に
+  移行すれば `'unsafe-inline'` を外せて、防御がさらに一段固くなります。
+- **注意**: v1.2.0 でこの移行に失敗して全体をリバートした経緯があります
+  (CHANGELOG 参照)。着手する場合は、1〜2箇所ずつ小さく変更し、その都度
+  `npm test`(スモークテスト)で確認しながら進めることを強く推奨します。
+- 完全クライアントサイドのアプリなので緊急性は低く、優先度は他の項目より
+  下で構いません。
+
+The HTML still uses 11 inline `onclick` attributes, which is why the CSP
+keeps `'unsafe-inline'`. Migrating them to `addEventListener` would allow
+removing `'unsafe-inline'`. Caution: this exact migration failed in v1.2.0
+and forced a full revert (see CHANGELOG); if attempted, change one or two
+handlers at a time and run `npm test` after each step. Low urgency for a
+fully client-side app.
