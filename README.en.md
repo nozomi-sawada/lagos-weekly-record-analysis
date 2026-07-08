@@ -21,6 +21,29 @@ This application is an interactive visualization tool designed to analyze geogra
 
 > **Note:** The sample files contain fictional data for demonstration purposes only. They are designed to help you understand the required data format and test the application's functionality.
 
+## 💻 Running Locally (Offline Use)
+
+If you want to use the tool without an internet connection, or run it on your own PC, follow these steps. **No installation or additional software is required.**
+
+1. Click the green **"Code" button → "Download ZIP"** at the top of this page
+2. Extract the ZIP file
+3. **Double-click `index.html`** inside the extracted folder to open it in your browser
+
+> **Important:** `index.html` loads `style.css`, `app.js`, and `vendor/` from the same folder.
+> **Copying or emailing `index.html` alone will not work** — always keep the folder together.
+> When offline, only the map background tiles (OpenStreetMap) will be missing; all analysis features still work.
+
+### File Structure
+
+| File / Folder | Role |
+|---|---|
+| `index.html` | Page skeleton (open this one) |
+| `style.css` | Styling and layout |
+| `app.js` | The analysis, map, and chart logic |
+| `vendor/` | Bundled libraries: Leaflet (map) and PapaParse (CSV parsing) |
+| `sample_analysis.csv` / `sample_locations.csv` | Sample data for testing |
+| `tests/` | Automated tests for developers (not needed for use) |
+
 ## Usage
 
 ### 1. Data Upload
