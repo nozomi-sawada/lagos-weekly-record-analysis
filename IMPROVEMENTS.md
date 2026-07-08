@@ -73,3 +73,29 @@ could be added under `tests/` and run in CI as a minimal regression guard.
   ありません(現在は何も起きない)。メッセージを出すと親切です。
   (Pressing "Analyze" with an empty keyword silently does nothing; a brief
   message would help.)
+
+## 6. アップロード時の事前検証 / Early validation of uploaded files
+
+2026-05-20 の Takumi Guard 診断報告書(対象コミット `49f7fe1`)の残存2項目
+(指摘 4.2 の一部・4.7 の一部)に対応するものです。診断の指摘 7 件のうち
+5 件は v1.4.1 (PR #6) で対応済みであることを 2026-07-08 に照合確認しました。
+本アプリは完全クライアントサイド(サーバー・認証・セッションなし)のため、
+これらはセキュリティ上の緊急性は低く、実質的には操作ミスに早く気づける
+ようにする UX 改善です。
+
+- ファイル選択時に拡張子(.csv)を確認し、違う場合は即座にメッセージを表示する
+- 分析用 CSV も選択時にヘッダー行だけ先読みし、必要な列(`text`, `Year`)の
+  有無を確認してから「準備完了」フラグを立てる(現在はファイル選択の時点で
+  フラグが立ち、中身の検証は「Start Analysis」後まで行われない)
+- 注意: MIME タイプ(`file.type === 'text/csv'`)による判定は、環境によって
+  CSV が `application/vnd.ms-excel` 等になるため誤検知しやすく、推奨しない
+
+These address the two residual items (parts of findings 4.2 and 4.7) from the
+2026-05-20 Takumi Guard assessment (audited commit `49f7fe1`); the other five
+findings were confirmed on 2026-07-08 to have been fixed in v1.4.1 (PR #6).
+Since the app is fully client-side (no server, auth, or sessions), these are
+low-urgency and are effectively UX improvements that surface file-selection
+mistakes earlier: check the .csv extension on selection, pre-read the analysis
+CSV header to confirm required columns (`text`, `Year`) before enabling Start
+Analysis. Note: MIME-type checks are unreliable for CSV (often
+`application/vnd.ms-excel`) and are not recommended.
