@@ -1,15 +1,19 @@
 # 今後の改善候補 / Future Improvement Candidates
 
-2026-07-08 のデバッグ・UI改善作業(v1.5.0)の際に確認した、未着手の改善候補の記録です。
-優先度や実施の要否はメンテナー(作者)の判断に委ねます。
+2026-07-08 のデバッグ・UI改善作業(v1.5.0)の際に確認した改善候補の記録です。
+対応済みの項目には冒頭にステータスを記しています。残りの項目の優先度や
+実施の要否はメンテナー(作者)の判断に委ねます。
 
 This is a record of improvement candidates identified during the debugging /
-UI-improvement work of 2026-07-08 (v1.5.0). None of these have been implemented
-yet; prioritization is left to the maintainer.
+UI-improvement work of 2026-07-08 (v1.5.0). Items that have since been
+addressed are marked with a status line; prioritization of the remaining
+items is left to the maintainer.
 
 ---
 
 ## 1. コードの分割 / Splitting the single-file structure
+
+**✅ v1.6.0 (2026-07-08) で対応済み / Done in v1.6.0** — `index.html` / `style.css` / `app.js` に分割し、スモークテストで検証しました。
 
 - 現状、`index.html` が CSS・JavaScript・翻訳データを含む 3,000 行超の単一ファイルです。
 - `styles.css` / `app.js` / `translations.js` などに分割すると、差分の確認やレビュー、
@@ -23,6 +27,8 @@ without changing how the page is hosted.
 
 ## 2. ライブラリの同梱(オフライン対応)/ Vendoring libraries for offline use
 
+**✅ v1.6.0 (2026-07-08) で対応済み / Done in v1.6.0** — Leaflet と PapaParse を `vendor/` に同梱し、CSP から cdnjs を除外しました。
+
 - Leaflet と PapaParse を CDN (cdnjs) から読み込んでいるため、オフライン環境や
   CDN がブロックされるネットワークでは動作しません。
 - `vendor/` ディレクトリにライブラリを同梱してそこから読み込めば、完全に
@@ -33,6 +39,8 @@ or on networks that block the CDN. Vendoring the libraries into a `vendor/`
 directory would make the app fully standalone and allow tightening the CSP.
 
 ## 3. "Yoruba" の集計上の扱い / How "Yoruba" is counted
+
+**✅ v1.6.0 (2026-07-08) で対応済み(注意書き方式)/ Addressed in v1.6.0 (documentation)** — 作者の判断により、データはそのまま残し README(日英)に方法論上の注意書きを追加しました。
 
 - デフォルトの地名データで "Yoruba" が座標付きの「場所」として扱われていますが、
   紙面での用法は民族・言語名としてのものが大半と考えられます。
@@ -47,6 +55,8 @@ removed from the gazetteer or counted under a separate "peoples/groups"
 category. The same may apply to e.g. "Egba" and "Ijebu".
 
 ## 4. 自動テストの追加 / Automated smoke tests
+
+**✅ v1.6.0 (2026-07-08) で対応済み / Done in v1.6.0** — `tests/smoke.js`(`npm test`)と GitHub Actions ワークフローを追加しました。
 
 - 現在、自動テストがなく、今回修正したような UI の回帰(グラフのはみ出し・
   ラベルの重なりなど)は目視でしか検出できません。

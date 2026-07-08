@@ -7,6 +7,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.6.0] - 2026-07-08
+
+### Changed
+
+- **Vendored libraries (offline support)**
+  - Leaflet 1.9.4 and PapaParse 5.4.1 are now bundled in `vendor/`
+    (copied from the official npm packages, licenses included) instead of
+    being loaded from cdnjs
+  - The app now works without internet access except for OpenStreetMap
+    tile loading; it also keeps working if the CDN is unreachable or blocked
+  - CSP tightened: `cdnjs.cloudflare.com` removed from `script-src` and
+    `style-src`
+
+- **Split single-file structure into `index.html` / `style.css` / `app.js`**
+  - Pure mechanical extraction of the inline `<style>` and `<script>`
+    blocks — no code was modified in the process
+  - A previous split (v1.2.0) was reverted because it broke functionality;
+    this time the split is verified by an automated end-to-end smoke test
+    (see below)
+
+### Added
+
+- **Automated smoke test** (`tests/smoke.js`, run with `npm test`)
+  - Drives the real app in headless Chromium via Playwright: uploads the
+    sample CSVs, starts the analysis, checks the geographic list, the
+    keyword timeline chart (bar count, no horizontal overflow, tick
+    labels), the enlarged chart modal (labels visible, Escape closes),
+    and the language switcher; fails on any JavaScript exception
+  - GitHub Actions workflow (`.github/workflows/smoke.yml`) runs it on
+    every push to main and on pull requests
+
+- **Methodological note on ethnonyms** (README.ja.md / README.en.md)
+  - Documents that terms like "Yoruba", "Egba", "Ijebu" in the sample
+    location data are counted as single coordinate points even though
+    they are mostly used as names of peoples/languages in the newspaper,
+    and explains how to exclude them from geographic aggregation
+
+---
+
 ## [1.5.0] - 2026-07-08
 
 ### Fixed
@@ -163,10 +202,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 > **Note:** The 3-file architecture introduced in this release was later
 > reverted to a single-file structure in commit `becfabf` ("Revert to
-> original single-file index.html (pre-3-file-split)"). The current
-> codebase uses a single `index.html` file; `style.css` and `analysis.js`
-> no longer exist. The CSP hardening, event handler modernization, and
-> performance improvements described below remain in effect.
+> original single-file index.html (pre-3-file-split)") because it broke
+> functionality. In v1.6.0 the codebase was split again — this time as a
+> pure mechanical extraction verified by an automated smoke test — into
+> `index.html` / `style.css` / `app.js`. The CSP hardening, event handler
+> modernization, and performance improvements described below remain in
+> effect.
 
 ### Changed - Major Refactoring for Security and Maintainability
 
